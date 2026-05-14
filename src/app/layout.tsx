@@ -61,7 +61,7 @@ export default function RootLayout({
       lang="en"
       className={`${fraunces.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white">
+      <body className="min-h-full flex flex-col bg-background">
         <RUOBanner />
         <Navbar />
         {children}

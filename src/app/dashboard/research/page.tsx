@@ -9,7 +9,7 @@ export default function ResearchPage() {
   return (
     <div className="flex flex-col gap-8 max-w-5xl">
       <div>
-        <h2 className="font-sans font-semibold text-[#0a0e1a] text-lg mb-2">
+        <h2 className="font-display italic text-[#0a0e1a] text-xl mb-2" style={{ letterSpacing: "-0.02em" }}>
           {research.headline}
         </h2>
         <p className="font-sans text-[#64748b] text-sm leading-relaxed max-w-2xl">

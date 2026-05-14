@@ -36,7 +36,7 @@ export function PHIModal({ open, onConfirm, onCancel }: PHIModalProps) {
     <Dialog open={open} onOpenChange={(o) => !o && handleCancel()}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-[#0a0e1a] font-sans">
+          <DialogTitle className="text-[#0a0e1a] font-sans font-semibold">
             {modal.title}
           </DialogTitle>
           <DialogDescription className="text-[#64748b] font-sans text-sm leading-relaxed mt-2">
@@ -44,12 +44,12 @@ export function PHIModal({ open, onConfirm, onCancel }: PHIModalProps) {
           </DialogDescription>
         </DialogHeader>
 
-        <label className="flex items-start gap-3 cursor-pointer mt-2">
+        <label className="flex items-start gap-3 cursor-pointer mt-2 border-l border-amber-400 pl-3">
           <input
             type="checkbox"
             checked={acknowledged}
             onChange={(e) => setAcknowledged(e.target.checked)}
-            className="mt-0.5 h-4 w-4 rounded border-[#e2e8f0] accent-[#1a5fae] cursor-pointer"
+            className="mt-0.5 h-4 w-4 accent-[#1a5fae] cursor-pointer flex-shrink-0"
           />
           <span className="text-[#0a0e1a] text-sm font-sans leading-snug">
             {modal.confirm}
@@ -60,14 +60,14 @@ export function PHIModal({ open, onConfirm, onCancel }: PHIModalProps) {
           <Button
             variant="outline"
             onClick={handleCancel}
-            className="font-sans"
+            className="rounded-none font-sans"
           >
             Cancel
           </Button>
           <Button
             onClick={handleConfirm}
             disabled={!acknowledged}
-            className="bg-[#1a5fae] hover:bg-[#1550a0] text-white font-sans disabled:opacity-40"
+            className="rounded-none bg-[#0a0e1a] hover:bg-[#1a5fae] text-white font-sans disabled:opacity-40"
           >
             Proceed
           </Button>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { GlenometrixMark } from "@/components/shared/GlenometrixMark";
@@ -18,6 +19,17 @@ function fadeUp(delay = 0) {
 }
 
 export function HeroSection() {
+  const [markSize, setMarkSize] = useState(200);
+
+  useEffect(() => {
+    function update() {
+      setMarkSize(Math.min(240, window.innerWidth * 0.42));
+    }
+    update();
+    window.addEventListener("resize", update, { passive: true });
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   return (
     <section
       className="relative min-h-[90vh] flex items-center bg-[#fdfcfc] overflow-hidden pt-[100px]"
@@ -61,7 +73,6 @@ export function HeroSection() {
               className="flex flex-wrap gap-3 pt-2"
               {...fadeUp(0.75)}
             >
-              {/* Primary CTA — decisive black fill (ElevenLabs/247Studio) */}
               <Link
                 href={hero.cta.href}
                 className="bg-[#0a0e1a] hover:bg-[#1a5fae] text-white font-sans font-medium px-6 py-3 rounded transition-colors inline-flex items-center gap-2 w-full sm:w-auto justify-center text-[0.9375rem]"
@@ -85,7 +96,7 @@ export function HeroSection() {
             transition={{ duration: 0.3, delay: 0.1 }}
           >
             <GlenometrixMark
-              size={Math.min(240, typeof window !== "undefined" ? window.innerWidth * 0.45 : 200)}
+              size={markSize}
               animated
               color="#1a5fae"
             />
@@ -93,7 +104,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Bottom rule — architectural blueprint edge */}
+      {/* Blueprint baseline rule */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-[#e5e5e3]" />
     </section>
   );

@@ -18,12 +18,12 @@ export function ISISBreakdown({ result }: ISISBreakdownProps) {
     <div className="w-full">
       <table className="w-full text-sm font-sans" aria-label="ISIS score breakdown">
         <thead>
-          <tr className="border-b border-[#e2e8f0]">
-            <th className="text-left py-2 text-[#64748b] text-xs uppercase tracking-wider font-medium">
+          <tr className="border-b border-[#ebebea]">
+            <th className="text-left py-2 font-mono text-[9px] text-[#9ca3af] uppercase tracking-[0.2em] font-normal">
               Factor
             </th>
-            <th className="text-right py-2 text-[#64748b] text-xs uppercase tracking-wider font-medium w-24">
-              Points
+            <th className="text-right py-2 font-mono text-[9px] text-[#9ca3af] uppercase tracking-[0.2em] font-normal w-24">
+              Pts
             </th>
           </tr>
         </thead>
@@ -32,7 +32,7 @@ export function ISISBreakdown({ result }: ISISBreakdownProps) {
             const pts = result[field];
             const earned = pts > 0;
             return (
-              <tr key={field} className="border-b border-[#e2e8f0]/60">
+              <tr key={field} className="border-b border-[#ebebea]">
                 <td className="py-3 text-[#0a0e1a] leading-snug pr-4">{label}</td>
                 <td className="py-3 text-right font-mono text-sm">
                   <span className={earned ? "text-[#1a5fae] font-semibold" : "text-[#64748b]"}>

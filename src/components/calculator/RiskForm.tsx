@@ -120,7 +120,7 @@ export function RiskForm({ onResult }: RiskFormProps) {
 
       {/* ISIS Score Inputs */}
       <fieldset className="flex flex-col gap-4">
-        <legend className="font-sans font-semibold text-[#0a0e1a] text-sm uppercase tracking-wider mb-1">
+        <legend className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] mb-2">
           ISIS Score Factors
         </legend>
 
@@ -174,7 +174,7 @@ export function RiskForm({ onResult }: RiskFormProps) {
 
       {/* Bone Loss Measurements */}
       <fieldset className="flex flex-col gap-4">
-        <legend className="font-sans font-semibold text-[#0a0e1a] text-sm uppercase tracking-wider mb-1">
+        <legend className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] mb-2">
           Bone Loss Measurements (mm)
         </legend>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -199,7 +199,7 @@ export function RiskForm({ onResult }: RiskFormProps) {
 
       {/* Track Status Inputs */}
       <fieldset className="flex flex-col gap-4">
-        <legend className="font-sans font-semibold text-[#0a0e1a] text-sm uppercase tracking-wider mb-1">
+        <legend className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] mb-2">
           Glenoid Track Assessment (mm)
         </legend>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -224,7 +224,7 @@ export function RiskForm({ onResult }: RiskFormProps) {
 
       {/* Context */}
       <fieldset className="flex flex-col gap-4">
-        <legend className="font-sans font-semibold text-[#0a0e1a] text-sm uppercase tracking-wider mb-1">
+        <legend className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] mb-2">
           Clinical Context
         </legend>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -238,7 +238,7 @@ export function RiskForm({ onResult }: RiskFormProps) {
             min={1}
           />
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="sex" className="font-sans text-[#0a0e1a] text-sm font-medium">
+            <Label htmlFor="sex" className="font-sans text-[#0a0e1a] text-sm">
               Biological sex
             </Label>
             <Select
@@ -267,7 +267,7 @@ export function RiskForm({ onResult }: RiskFormProps) {
         <Button
           type="submit"
           disabled={loading}
-          className="flex-1 sm:flex-none bg-[#1a5fae] hover:bg-[#1550a0] text-white font-sans font-medium gap-2 disabled:opacity-60"
+          className="flex-1 sm:flex-none rounded-none bg-[#0a0e1a] hover:bg-[#1a5fae] text-white font-sans font-medium gap-2 disabled:opacity-60"
         >
           {loading ? (
             <>
@@ -282,7 +282,7 @@ export function RiskForm({ onResult }: RiskFormProps) {
           type="button"
           variant="outline"
           onClick={handleReset}
-          className="font-sans text-[#64748b]"
+          className="rounded-none font-sans text-[#64748b]"
         >
           Reset
         </Button>
@@ -314,7 +314,7 @@ function NumField({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <Label htmlFor={id} className="font-sans text-[#0a0e1a] text-sm font-medium">
+      <Label htmlFor={id} className="font-sans text-[#0a0e1a] text-sm">
         {label}
       </Label>
       <Input
@@ -326,7 +326,7 @@ function NumField({
         min={min}
         max={max}
         step="0.1"
-        className={`font-sans text-sm ${error ? "border-[#dc2626] focus-visible:ring-[#dc2626]" : ""}`}
+        className={`rounded-none font-sans text-sm focus-visible:ring-0 focus-visible:border-[#1a5fae] ${error ? "border-[#dc2626]" : ""}`}
         aria-describedby={error ? `${id}-error` : undefined}
         aria-invalid={!!error}
       />
