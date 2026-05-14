@@ -17,8 +17,8 @@ export function GlenometrixLogo({
   animated = false,
   className,
 }: GlenometrixLogoProps) {
-  // Mark is always brand blue — the filled circle reads on both light and dark surfaces.
-  const markColor = "#1a5fae";
+  const markColor =
+    variant === "light" ? "#ffffff" : "#1a5fae";
   const textColor =
     variant === "light" ? "text-white" : "text-[#0a0e1a]";
   const accentColor =
