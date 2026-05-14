@@ -1,0 +1,78 @@
+"use client";
+
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { siteConfig } from "@/config/site";
+
+interface PHIModalProps {
+  open: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+export function PHIModal({ open, onConfirm, onCancel }: PHIModalProps) {
+  const [acknowledged, setAcknowledged] = useState(false);
+  const { modal } = siteConfig.ruo;
+
+  function handleConfirm() {
+    setAcknowledged(false);
+    onConfirm();
+  }
+
+  function handleCancel() {
+    setAcknowledged(false);
+    onCancel();
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={(o) => !o && handleCancel()}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle className="text-[#0a0e1a] font-sans">
+            {modal.title}
+          </DialogTitle>
+          <DialogDescription className="text-[#64748b] font-sans text-sm leading-relaxed mt-2">
+            {modal.body}
+          </DialogDescription>
+        </DialogHeader>
+
+        <label className="flex items-start gap-3 cursor-pointer mt-2">
+          <input
+            type="checkbox"
+            checked={acknowledged}
+            onChange={(e) => setAcknowledged(e.target.checked)}
+            className="mt-0.5 h-4 w-4 rounded border-[#e2e8f0] accent-[#1a5fae] cursor-pointer"
+          />
+          <span className="text-[#0a0e1a] text-sm font-sans leading-snug">
+            {modal.confirm}
+          </span>
+        </label>
+
+        <DialogFooter className="mt-4 gap-2">
+          <Button
+            variant="outline"
+            onClick={handleCancel}
+            className="font-sans"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleConfirm}
+            disabled={!acknowledged}
+            className="bg-[#1a5fae] hover:bg-[#1550a0] text-white font-sans disabled:opacity-40"
+          >
+            Proceed
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
