@@ -1,5 +1,4 @@
 import { ExternalLink } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 
 interface VendorCardProps {
   name: string;
@@ -16,12 +15,9 @@ export function VendorCard({ name, tagline, description, link, focus }: VendorCa
         <h3 className="font-sans font-bold text-[#0a0e1a] text-base leading-tight">
           {name}
         </h3>
-        <Badge
-          variant="outline"
-          className="font-sans text-[10px] uppercase tracking-wider text-[#64748b] border-[#e2e8f0] flex-shrink-0 whitespace-nowrap"
-        >
+        <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-[#64748b] flex-shrink-0 whitespace-nowrap">
           {focus}
-        </Badge>
+        </span>
       </div>
 
       <p className="font-sans text-[#1a5fae] text-xs font-medium">

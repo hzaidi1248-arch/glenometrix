@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { GlenometrixMark } from "@/components/shared/GlenometrixMark";
 import { siteConfig } from "@/config/site";
 
@@ -17,13 +16,10 @@ export function OutputPreview() {
 
         {/* Score card — max 480px, centered */}
         <div className="w-full max-w-[480px] border border-[#e2e8f0] rounded-2xl p-8 relative">
-          {/* RUO badge */}
-          <Badge
-            variant="outline"
-            className="absolute top-4 right-4 font-sans text-[10px] uppercase tracking-wider text-[#64748b] border-[#e2e8f0]"
-          >
-            Research Use Only
-          </Badge>
+          {/* RUO label */}
+          <span className="absolute top-5 right-5 font-mono text-[9px] uppercase tracking-[0.22em] text-[#64748b]">
+            RUO
+          </span>
 
           <div className="flex flex-col gap-6">
             {/* Primary scores */}
@@ -49,14 +45,20 @@ export function OutputPreview() {
               </div>
             </div>
 
-            {/* Risk + track badges */}
-            <div className="flex flex-wrap gap-2">
-              <Badge className="bg-[#dc2626]/10 text-[#dc2626] border-[#dc2626]/20 font-sans text-xs font-medium hover:bg-[#dc2626]/10">
-                {outputPreview.riskCategory}
-              </Badge>
-              <Badge className="bg-amber-500/10 text-amber-700 border-amber-500/20 font-sans text-xs font-medium hover:bg-amber-500/10">
-                {outputPreview.trackStatus}
-              </Badge>
+            {/* Risk + track status */}
+            <div className="flex flex-wrap gap-5">
+              <span className="inline-flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-[#dc2626] flex-shrink-0" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#dc2626]">
+                  {outputPreview.riskCategory}
+                </span>
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-amber-500 flex-shrink-0" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-700">
+                  {outputPreview.trackStatus}
+                </span>
+              </span>
             </div>
 
             {/* Glenoid mark */}

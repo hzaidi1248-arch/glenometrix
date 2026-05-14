@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { GlenometrixMark } from "@/components/shared/GlenometrixMark";
 import { siteConfig } from "@/config/site";
 
@@ -39,12 +38,9 @@ export function HeroSection() {
           {/* Left — text content */}
           <div className="flex flex-col gap-6 order-2 md:order-1">
             <motion.div {...fadeUp(0.4)}>
-              <Badge
-                variant="outline"
-                className="font-sans text-[#1a5fae] border-[#1a5fae]/30 bg-[#1a5fae]/5 px-3 py-1 text-xs tracking-wide uppercase"
-              >
+              <p className="font-mono text-[11px] text-[#1a5fae] uppercase tracking-[0.22em]">
                 {hero.badge}
-              </Badge>
+              </p>
             </motion.div>
 
             <motion.h1

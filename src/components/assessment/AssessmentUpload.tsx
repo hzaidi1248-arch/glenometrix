@@ -5,7 +5,6 @@ import { UploadCloud, AlertTriangle, CheckCircle, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PHIModal } from "@/components/shared/PHIModal";
 import { GlenometrixMark } from "@/components/shared/GlenometrixMark";
-import { Badge } from "@/components/ui/badge";
 import { siteConfig } from "@/config/site";
 
 type UploadState = "idle" | "confirmed" | "loading" | "done";
@@ -50,12 +49,9 @@ export function AssessmentUpload() {
           <h2 className="font-sans font-semibold text-[#0a0e1a] text-lg">
             Analysis Complete
           </h2>
-          <Badge
-            variant="outline"
-            className="font-sans text-[10px] uppercase tracking-wider text-[#64748b] border-[#e2e8f0]"
-          >
-            Research Use Only
-          </Badge>
+          <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-[#64748b]">
+            RUO
+          </span>
         </div>
 
         <div className="border border-[#e2e8f0] rounded-2xl p-8 bg-white flex flex-col gap-6">
@@ -79,13 +75,19 @@ export function AssessmentUpload() {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            <Badge className="bg-[#dc2626]/10 text-[#dc2626] border-[#dc2626]/20 font-sans text-xs hover:bg-[#dc2626]/10">
-              {outputPreview.riskCategory}
-            </Badge>
-            <Badge className="bg-amber-500/10 text-amber-700 border-amber-500/20 font-sans text-xs hover:bg-amber-500/10">
-              {outputPreview.trackStatus}
-            </Badge>
+          <div className="flex flex-wrap gap-5">
+            <span className="inline-flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-[#dc2626] flex-shrink-0" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#dc2626]">
+                {outputPreview.riskCategory}
+              </span>
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-amber-500 flex-shrink-0" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-700">
+                {outputPreview.trackStatus}
+              </span>
+            </span>
           </div>
 
           <div className="flex justify-center py-2">

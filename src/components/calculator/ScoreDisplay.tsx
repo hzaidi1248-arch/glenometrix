@@ -1,43 +1,19 @@
 import type { RiskScore } from "@/lib/clinical/types";
-import { Badge } from "@/components/ui/badge";
 import { ISISBreakdown } from "./ISISBreakdown";
 
 interface ScoreDisplayProps {
   result: RiskScore;
 }
 
-const RISK_STYLES: Record<
-  string,
-  { bg: string; text: string; border: string; label: string }
-> = {
-  low: {
-    bg: "bg-[#16a34a]/10",
-    text: "text-[#16a34a]",
-    border: "border-[#16a34a]/20",
-    label: "Low Risk",
-  },
-  moderate: {
-    bg: "bg-amber-500/10",
-    text: "text-amber-700",
-    border: "border-amber-500/20",
-    label: "Moderate Risk",
-  },
-  high: {
-    bg: "bg-[#dc2626]/10",
-    text: "text-[#dc2626]",
-    border: "border-[#dc2626]/20",
-    label: "High Risk",
-  },
-  critical: {
-    bg: "bg-[#dc2626]/20",
-    text: "text-[#dc2626]",
-    border: "border-[#dc2626]/40",
-    label: "Critical Risk",
-  },
+const RISK_DOT: Record<string, { dot: string; text: string; label: string }> = {
+  low:      { dot: "bg-[#16a34a]", text: "text-[#16a34a]", label: "Low Risk"      },
+  moderate: { dot: "bg-amber-500", text: "text-amber-700", label: "Moderate Risk" },
+  high:     { dot: "bg-[#dc2626]", text: "text-[#dc2626]", label: "High Risk"     },
+  critical: { dot: "bg-[#dc2626]", text: "text-[#dc2626]", label: "Critical Risk" },
 };
 
 export function ScoreDisplay({ result }: ScoreDisplayProps) {
-  const risk = RISK_STYLES[result.riskCategory] ?? RISK_STYLES.low;
+  const risk = RISK_DOT[result.riskCategory] ?? RISK_DOT.low;
 
   return (
     <div className="border border-[#e2e8f0] rounded-2xl p-8 bg-white flex flex-col gap-6">
@@ -46,12 +22,9 @@ export function ScoreDisplay({ result }: ScoreDisplayProps) {
         <h3 className="font-sans font-semibold text-[#0a0e1a] text-base">
           Glenometrix Score
         </h3>
-        <Badge
-          variant="outline"
-          className="font-sans text-[10px] uppercase tracking-wider text-[#64748b] border-[#e2e8f0] flex-shrink-0"
-        >
+        <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-[#64748b] flex-shrink-0">
           Research Guidance Only
-        </Badge>
+        </span>
       </div>
 
       {/* Primary scores — side by side on desktop, stacked on mobile */}
@@ -75,22 +48,28 @@ export function ScoreDisplay({ result }: ScoreDisplayProps) {
         </div>
       </div>
 
-      {/* Risk + track badges */}
-      <div className="flex flex-wrap gap-2">
-        <Badge
-          className={`${risk.bg} ${risk.text} ${risk.border} font-sans text-xs font-medium hover:${risk.bg}`}
-        >
-          {risk.label}
-        </Badge>
-        <Badge
-          className={`font-sans text-xs font-medium ${
-            result.trackStatus === "off-track"
-              ? "bg-amber-500/10 text-amber-700 border-amber-500/20 hover:bg-amber-500/10"
-              : "bg-[#16a34a]/10 text-[#16a34a] border-[#16a34a]/20 hover:bg-[#16a34a]/10"
-          }`}
-        >
-          {result.trackStatus === "off-track" ? "Off-Track" : "On-Track"}
-        </Badge>
+      {/* Risk + track status */}
+      <div className="flex flex-wrap gap-5">
+        <span className="inline-flex items-center gap-2">
+          <span className={`w-1.5 h-1.5 flex-shrink-0 ${risk.dot}`} />
+          <span className={`font-mono text-[10px] uppercase tracking-[0.18em] ${risk.text}`}>
+            {risk.label}
+          </span>
+        </span>
+        <span className="inline-flex items-center gap-2">
+          <span
+            className={`w-1.5 h-1.5 flex-shrink-0 ${
+              result.trackStatus === "off-track" ? "bg-amber-500" : "bg-[#16a34a]"
+            }`}
+          />
+          <span
+            className={`font-mono text-[10px] uppercase tracking-[0.18em] ${
+              result.trackStatus === "off-track" ? "text-amber-700" : "text-[#16a34a]"
+            }`}
+          >
+            {result.trackStatus === "off-track" ? "Off-Track" : "On-Track"}
+          </span>
+        </span>
       </div>
 
       {/* Recurrence risk */}

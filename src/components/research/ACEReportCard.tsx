@@ -1,5 +1,4 @@
 import { ExternalLink } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 
 interface ACEReportCardProps {
   id: string;
@@ -24,16 +23,16 @@ export function ACEReportCard({
   return (
     <article className="border border-[#e2e8f0] rounded-2xl p-6 bg-white flex flex-col gap-4">
       <div className="flex items-start justify-between gap-3 flex-wrap">
-        <Badge
-          className={`font-sans text-xs font-semibold flex-shrink-0 hover:opacity-100 ${
+        <span
+          className={`font-mono text-[10px] uppercase tracking-[0.18em] border-l-2 pl-2 flex-shrink-0 ${
             isGrade1
-              ? "bg-[#1a5fae]/10 text-[#1a5fae] border-[#1a5fae]/20"
-              : "bg-[#f8f9fc] text-[#64748b] border-[#e2e8f0]"
+              ? "text-[#1a5fae] border-[#1a5fae]"
+              : "text-[#64748b] border-[#e2e8f0]"
           }`}
         >
           {grade}
-        </Badge>
-        <span className="font-sans text-[#64748b] text-xs flex-shrink-0">{year}</span>
+        </span>
+        <span className="font-mono text-[10px] text-[#64748b] flex-shrink-0 tracking-wider">{year}</span>
       </div>
 
       <h3 className="font-sans font-semibold text-[#0a0e1a] text-sm leading-snug">
