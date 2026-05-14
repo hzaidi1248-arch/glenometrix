@@ -21,6 +21,16 @@ export const siteConfig = {
     cta: { label: "Request Access", href: "/#access" },
   },
 
+  trustStrip: {
+    label: "Clinical algorithms",
+    items: [
+      "Balg & Boileau — ISIS Score · JBJS 2007",
+      "Di Giacomo et al. — Glenoid Track · Arthroscopy 2014",
+      "Burkhart & De Beer — Critical Threshold · Arthroscopy 2000",
+      "OrthoEvidence ACE Grade I Evidence Base",
+    ],
+  },
+
   hero: {
     badge: "Limited Research Access — Phase 0",
     // TODO: Replace headline with Moin's preferred positioning statement

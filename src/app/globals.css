@@ -123,6 +123,15 @@
   box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.08);
 }
 
+/* ─── Utility: hide scrollbar while keeping scroll functional ─────────────── */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* ─── Score display clamp ─────────────────────────────────────────────────── */
 .score-value {
   font-size: clamp(2rem, 5vw, 3rem);
