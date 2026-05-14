@@ -36,8 +36,8 @@ export function Footer() {
                 Research
               </p>
               {[
-                { label: "Upload Imaging", href: "#upload" },
-                { label: "Request Access", href: "#access" },
+                { label: "Upload Imaging", href: "/#upload" },
+                { label: "Request Access", href: "/#access" },
                 { label: "Dashboard", href: "/dashboard" },
               ].map((link) => (
                 <Link

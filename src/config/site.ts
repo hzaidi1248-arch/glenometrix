@@ -14,11 +14,11 @@ export const siteConfig = {
 
   nav: {
     links: [
-      { label: "The Score", href: "#metric" },
-      { label: "Research Access", href: "#upload" },
+      { label: "The Score", href: "/#metric" },
+      { label: "Research Access", href: "/#upload" },
       { label: "Dashboard", href: "/dashboard" },
     ],
-    cta: { label: "Request Access", href: "#access" },
+    cta: { label: "Request Access", href: "/#access" },
   },
 
   hero: {
