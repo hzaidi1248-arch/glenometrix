@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 import { GlenometrixMark } from "@/components/shared/GlenometrixMark";
 import { siteConfig } from "@/config/site";
 
@@ -20,25 +19,17 @@ function fadeUp(delay = 0) {
 
 export function HeroSection() {
   return (
-    <section className="relative grain-overlay min-h-[90vh] flex items-center bg-white overflow-hidden pt-[100px]">
-      {/* Subtle radial background accent */}
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        aria-hidden="true"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 60% at 70% 50%, rgba(26,95,174,0.04) 0%, transparent 70%)",
-        }}
-      />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
-        {/* Desktop: 60/40 split. Mobile: mark above text */}
+    <section
+      className="relative min-h-[90vh] flex items-center bg-[#fdfcfc] overflow-hidden pt-[100px]"
+      aria-label="Hero"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
         <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-12 md:gap-16 items-center">
 
           {/* Left — text content */}
           <div className="flex flex-col gap-6 order-2 md:order-1">
             <motion.div {...fadeUp(0.4)}>
-              <p className="font-mono text-[11px] text-[#1a5fae] uppercase tracking-[0.22em]">
+              <p className="font-mono text-[10px] text-[#1a5fae] uppercase tracking-[0.24em]">
                 {hero.badge}
               </p>
             </motion.div>
@@ -70,16 +61,16 @@ export function HeroSection() {
               className="flex flex-wrap gap-3 pt-2"
               {...fadeUp(0.75)}
             >
+              {/* Primary CTA — decisive black fill (ElevenLabs/247Studio) */}
               <Link
                 href={hero.cta.href}
-                className="bg-[#1a5fae] hover:bg-[#1550a0] text-white font-sans font-medium px-6 py-3 rounded-lg transition-colors inline-flex items-center gap-2 w-full sm:w-auto justify-center text-base"
+                className="bg-[#0a0e1a] hover:bg-[#1a5fae] text-white font-sans font-medium px-6 py-3 rounded transition-colors inline-flex items-center gap-2 w-full sm:w-auto justify-center text-[0.9375rem]"
               >
                 {hero.cta.label}
-                <ArrowRight size={16} />
               </Link>
               <Link
                 href={hero.ctaSecondary.href}
-                className="font-sans text-[#0a0e1a] hover:bg-[#f8f9fc] px-6 py-3 rounded-lg transition-colors inline-flex items-center w-full sm:w-auto justify-center text-base"
+                className="font-sans text-[#0a0e1a] border border-[#e5e5e3] hover:border-[#0a0e1a] px-6 py-3 rounded transition-colors inline-flex items-center w-full sm:w-auto justify-center text-[0.9375rem]"
               >
                 {hero.ctaSecondary.label}
               </Link>
@@ -97,11 +88,13 @@ export function HeroSection() {
               size={Math.min(240, typeof window !== "undefined" ? window.innerWidth * 0.45 : 200)}
               animated
               color="#1a5fae"
-              className="drop-shadow-[0_0_40px_rgba(26,95,174,0.12)]"
             />
           </motion.div>
         </div>
       </div>
+
+      {/* Bottom rule — architectural blueprint edge */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-[#e5e5e3]" />
     </section>
   );
 }

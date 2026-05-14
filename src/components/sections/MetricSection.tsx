@@ -20,7 +20,7 @@ export function MetricSection() {
   return (
     <section
       id="metric"
-      className="bg-white py-24 px-4 sm:px-6 lg:px-8"
+      className="bg-[#fdfcfc] py-24 px-4 sm:px-6 lg:px-8"
       aria-labelledby="metric-heading"
     >
       <div className="max-w-7xl mx-auto">
@@ -34,7 +34,7 @@ export function MetricSection() {
         >
           <h2
             id="metric-heading"
-            className="font-sans font-bold text-[#0a0e1a] leading-tight mb-4"
+            className="font-display italic text-[#0a0e1a] leading-tight mb-4"
             style={{
               fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)",
               letterSpacing: "-0.025em",
@@ -49,11 +49,11 @@ export function MetricSection() {
         </motion.div>
 
         {/* 3-column feature strip */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#e2e8f0]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#e5e5e3]">
           {metric.steps.map((step, i) => (
             <motion.div
               key={step.title}
-              className="bg-white flex flex-col gap-6 px-8 py-10"
+              className="bg-[#fdfcfc] flex flex-col gap-6 px-8 py-10"
               {...staggerItem(i)}
             >
               {/* Step numeral */}

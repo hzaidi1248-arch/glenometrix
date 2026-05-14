@@ -26,7 +26,7 @@ export function Navbar() {
         className={cn(
           "sticky top-9 z-40 w-full transition-all duration-200",
           scrolled
-            ? "bg-white/90 backdrop-blur-sm border-b border-[#e2e8f0]"
+            ? "bg-[#fdfcfc]/95 backdrop-blur-sm border-b border-[#e5e5e3]"
             : "bg-transparent"
         )}
       >
@@ -56,7 +56,7 @@ export function Navbar() {
           <div className="hidden md:block">
             <Link
               href={siteConfig.nav.cta.href}
-              className="bg-[#1a5fae] hover:bg-[#1550a0] text-white font-sans text-sm font-medium px-4 py-2 rounded-lg transition-colors inline-block"
+              className="bg-[#0a0e1a] hover:bg-[#1a5fae] text-white font-sans text-sm font-medium px-4 py-2 rounded transition-colors inline-block"
             >
               {siteConfig.nav.cta.label}
             </Link>
@@ -64,7 +64,7 @@ export function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 rounded-md text-[#0a0e1a] hover:bg-[#f8f9fc] transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="md:hidden p-2 text-[#0a0e1a] hover:bg-[#f5f5f3] transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
             onClick={() => setDrawerOpen(true)}
             aria-label="Open navigation menu"
             aria-expanded={drawerOpen}

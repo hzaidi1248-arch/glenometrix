@@ -8,16 +8,20 @@ interface VendorCardProps {
   focus?: string;
 }
 
-export function VendorCard({ name, tagline, description, link, focus }: VendorCardProps) {
+export function VendorCard({ name, tagline, description, link }: VendorCardProps) {
   return (
-    <article className="border border-[#e2e8f0] rounded-2xl p-6 bg-white flex flex-col gap-4 h-full">
-      <h3 className="font-sans font-bold text-[#0a0e1a] text-base leading-tight">
-        {name}
-      </h3>
-
-      <p className="font-sans text-[#1a5fae] text-xs font-medium">
-        {tagline}
-      </p>
+    <article
+      className="bg-white flex flex-col gap-4 p-6 h-full"
+      style={{ boxShadow: "inset 0 0 0 0.5px rgba(0,0,0,0.08)" }}
+    >
+      <div className="flex flex-col gap-1">
+        <h3 className="font-sans font-semibold text-[#0a0e1a] text-[0.9375rem] leading-tight">
+          {name}
+        </h3>
+        <p className="font-mono text-[10px] text-[#1a5fae] uppercase tracking-[0.18em]">
+          {tagline}
+        </p>
+      </div>
 
       <p className="font-sans text-[#64748b] text-sm leading-relaxed flex-1">
         {description}
@@ -27,10 +31,10 @@ export function VendorCard({ name, tagline, description, link, focus }: VendorCa
         href={link}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 font-sans text-sm font-medium text-[#1a5fae] hover:text-[#1550a0] transition-colors mt-auto"
+        className="inline-flex items-center gap-1.5 font-sans text-sm font-medium text-[#0a0e1a] hover:text-[#1a5fae] transition-colors mt-auto border-b border-[#e5e5e3] hover:border-[#1a5fae] pb-0.5 w-fit"
       >
         Visit website
-        <ExternalLink size={13} />
+        <ExternalLink size={11} />
       </a>
     </article>
   );

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { UploadCloud, AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PHIModal } from "@/components/shared/PHIModal";
 import { siteConfig } from "@/config/site";
@@ -19,7 +18,6 @@ export function UploadSection() {
 
   function handlePhiConfirm() {
     setPhiModalOpen(false);
-    // Phase 0: file picker opens but no processing occurs
     fileInputRef.current?.click();
   }
 
@@ -30,14 +28,17 @@ export function UploadSection() {
   return (
     <section
       id="upload"
-      className="bg-[#f8f9fc] py-24 px-4 sm:px-6 lg:px-8"
+      className="bg-[#f5f5f3] py-24 px-4 sm:px-6 lg:px-8"
       aria-labelledby="upload-heading"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="max-w-2xl mx-auto text-center mb-10">
+        <div className="max-w-2xl mx-auto text-center mb-12">
+          <p className="font-mono text-[10px] text-[#1a5fae] uppercase tracking-[0.24em] mb-4">
+            Phase 0 — Research Only
+          </p>
           <h2
             id="upload-heading"
-            className="font-sans font-bold text-[#0a0e1a] mb-4"
+            className="font-display italic text-[#0a0e1a] mb-4"
             style={{
               fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)",
               letterSpacing: "-0.025em",
@@ -50,54 +51,57 @@ export function UploadSection() {
           </p>
         </div>
 
-        {/* Upload zone — max-width 640px, full-width on mobile */}
+        {/* Upload zone — sharp edges, minimal, Attio clinical instrument */}
         <div className="max-w-xl mx-auto w-full">
-          <div className="relative">
-            <button
-              type="button"
-              onClick={handleZoneInteraction}
-              onDragOver={(e) => {
-                e.preventDefault();
-                setIsDragOver(true);
-              }}
-              onDragLeave={() => setIsDragOver(false)}
-              onDrop={(e) => {
-                e.preventDefault();
-                setIsDragOver(false);
-                handleZoneInteraction();
-              }}
-              aria-label="Upload de-identified CT imaging"
+          <button
+            type="button"
+            onClick={handleZoneInteraction}
+            onDragOver={(e) => {
+              e.preventDefault();
+              setIsDragOver(true);
+            }}
+            onDragLeave={() => setIsDragOver(false)}
+            onDrop={(e) => {
+              e.preventDefault();
+              setIsDragOver(false);
+              handleZoneInteraction();
+            }}
+            aria-label="Upload de-identified CT imaging"
+            className={cn(
+              "w-full min-h-[200px] border transition-all duration-150 flex flex-col items-center justify-center gap-3 p-10 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1a5fae] focus-visible:ring-offset-2",
+              isDragOver
+                ? "border-[#1a5fae] bg-white"
+                : "border-[#d1d1cf] bg-white hover:border-[#1a5fae]"
+            )}
+          >
+            {/* Crosshair mark — clinical, no stock icon */}
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              aria-hidden="true"
               className={cn(
-                "w-full min-h-[220px] rounded-2xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-4 p-8 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a5fae]",
-                isDragOver
-                  ? "border-[#1a5fae] bg-[#1a5fae]/5"
-                  : "border-[#e2e8f0] bg-white hover:border-[#1a5fae]/50 hover:bg-[#1a5fae]/2"
+                "transition-colors duration-150",
+                isDragOver ? "stroke-[#1a5fae]" : "stroke-[#9ca3af]"
               )}
             >
-              <UploadCloud
-                size={40}
-                className={cn(
-                  "transition-colors duration-200",
-                  isDragOver ? "text-[#1a5fae]" : "text-[#64748b]"
-                )}
-              />
-              <div className="text-center">
-                <p className="font-sans font-medium text-[#0a0e1a] text-base">
-                  {upload.dropzoneText}
-                </p>
-                <p className="font-sans text-[#64748b] text-sm mt-1">
-                  {upload.dropzoneSub}
-                </p>
-              </div>
-            </button>
+              <circle cx="16" cy="16" r="6" strokeWidth="1" />
+              <line x1="16" y1="2" x2="16" y2="10" strokeWidth="1" />
+              <line x1="16" y1="22" x2="16" y2="30" strokeWidth="1" />
+              <line x1="2" y1="16" x2="10" y2="16" strokeWidth="1" />
+              <line x1="22" y1="16" x2="30" y2="16" strokeWidth="1" />
+            </svg>
 
-            {/* Phase 0 overlay */}
-            <div className="pointer-events-none absolute inset-0 rounded-2xl flex items-end justify-center pb-5">
-              <div className="bg-[#0f1628]/85 backdrop-blur-sm text-white text-xs font-sans font-medium px-4 py-2 rounded-full tracking-wide">
-                {upload.phase0Notice}
-              </div>
+            <div className="text-center">
+              <p className="font-sans font-medium text-[#0a0e1a] text-[0.9375rem]">
+                {upload.dropzoneText}
+              </p>
+              <p className="font-mono text-[10px] text-[#9ca3af] mt-1 uppercase tracking-wider">
+                {upload.dropzoneSub}
+              </p>
             </div>
-          </div>
+          </button>
 
           {/* Hidden file input — Phase 0: no processing */}
           <input
@@ -109,11 +113,14 @@ export function UploadSection() {
             aria-hidden="true"
           />
 
-          {/* PHI disclaimer */}
-          <div className="mt-4 flex items-start gap-2 text-[#64748b] text-xs font-sans leading-relaxed">
-            <AlertTriangle size={14} className="mt-0.5 flex-shrink-0 text-amber-500" />
+          {/* PHI notice — inline text, no pill */}
+          <div className="mt-4 flex items-start gap-3 text-[#64748b] text-xs font-sans leading-relaxed border-l border-amber-400 pl-3">
             <span>{upload.phiWarning}</span>
           </div>
+
+          <p className="mt-3 font-mono text-[10px] text-[#9ca3af] uppercase tracking-wider">
+            {upload.phase0Notice}
+          </p>
         </div>
       </div>
 

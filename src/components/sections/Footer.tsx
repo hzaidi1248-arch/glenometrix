@@ -4,7 +4,7 @@ import { siteConfig } from "@/config/site";
 
 export function Footer() {
   return (
-    <footer className="bg-[#0f1628] border-t border-white/10 px-4 sm:px-6 lg:px-8 pt-16 pb-10">
+    <footer className="bg-[#0a0e1a] border-t border-white/8 px-4 sm:px-6 lg:px-8 pt-16 pb-10">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between gap-10 mb-12">
           {/* Brand */}

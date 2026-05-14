@@ -9,10 +9,10 @@ export function RUOBanner() {
     <aside
       role="banner"
       aria-label="Regulatory notice"
-      className="sticky top-0 z-50 w-full bg-[#0f1628] text-white text-center py-2 px-4"
+      className="sticky top-0 z-50 w-full bg-[#0a0e1a] text-white text-center py-2 px-4"
       style={{ fontSize: 11, letterSpacing: "0.04em" }}
     >
-      <span className="font-sans font-medium uppercase">
+      <span className="font-mono uppercase tracking-[0.2em]" style={{ fontSize: 10 }}>
         {siteConfig.ruo.banner}
       </span>
     </aside>
