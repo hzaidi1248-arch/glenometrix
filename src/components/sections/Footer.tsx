@@ -9,7 +9,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between gap-10 mb-12">
           {/* Brand */}
           <div className="flex flex-col gap-4 max-w-sm">
-            <GlenometrixLogo variant="light" markSize={32} />
+            <GlenometrixLogo variant="light" markSize={48} />
             <p className="font-sans text-white/50 text-sm leading-relaxed">
               {siteConfig.description}
             </p>

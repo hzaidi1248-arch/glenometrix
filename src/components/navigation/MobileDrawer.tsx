@@ -16,7 +16,7 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
       <SheetContent side="right" className="w-[300px] flex flex-col bg-[#fdfcfc] px-6 py-8">
         <SheetTitle className="sr-only">Navigation menu</SheetTitle>
 
-        <GlenometrixLogo markSize={32} className="mb-8" />
+        <GlenometrixLogo markSize={48} className="mb-8" />
 
         <nav className="flex flex-col gap-0.5 flex-1" aria-label="Mobile navigation">
           {siteConfig.nav.links.map((link) => (
