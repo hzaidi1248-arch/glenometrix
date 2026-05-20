@@ -1,12 +1,17 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { GlenometrixMark } from "./GlenometrixMark";
 
 interface GlenometrixLogoProps {
   markSize?: number;
+  /** "light" for use on dark backgrounds — renders SVG mark + white text */
   variant?: "default" | "light";
   animated?: boolean;
   className?: string;
 }
+
+// PNG natural dimensions: 500 × 166 px
+const PNG_ASPECT = 500 / 166;
 
 export function GlenometrixLogo({
   markSize = 40,
@@ -14,28 +19,37 @@ export function GlenometrixLogo({
   animated = false,
   className,
 }: GlenometrixLogoProps) {
-  const textColor =
-    variant === "light" ? "text-white" : "text-[#0a0e1a]";
-  const accentColor =
-    variant === "light" ? "text-white/90" : "text-[#1a5fae]";
+  if (variant === "default") {
+    return (
+      <div
+        className={cn("flex items-center select-none", className)}
+        aria-label="GlenometriX"
+      >
+        <Image
+          src="/logo.png"
+          alt="GlenometriX"
+          height={markSize}
+          width={Math.round(markSize * PNG_ASPECT)}
+          priority
+          style={{ objectFit: "contain" }}
+        />
+      </div>
+    );
+  }
 
-  // Font size scales with mark: cap height ≈ 70% of mark height
+  // Light variant: white arc mark + white wordmark (for dark backgrounds)
   const fontSize = Math.round(markSize * 0.52);
-
   return (
     <div
       className={cn("flex items-center gap-3 select-none", className)}
       aria-label="GlenometriX"
     >
-      {/* Mark always renders its own blue gradient — no color prop needed */}
-      <GlenometrixMark size={markSize} animated={animated} />
-
+      <GlenometrixMark size={markSize} color="#ffffff" animated={animated} />
       <span
-        className={cn("font-sans font-extrabold tracking-tight", textColor)}
+        className="font-sans font-extrabold text-white tracking-tight"
         style={{ fontSize, lineHeight: 1, letterSpacing: "-0.04em" }}
       >
-        Glenometri
-        <span className={cn("font-extrabold", accentColor)}>X</span>
+        Glenometri<span className="text-white/80">X</span>
       </span>
     </div>
   );
