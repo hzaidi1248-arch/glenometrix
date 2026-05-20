@@ -24,12 +24,11 @@ function fadeUp(delay = 0) {
 function ClinicalReadoutCard() {
   return (
     <div
-      className="w-full max-w-[380px] bg-[#0a0e1a] select-none"
+      className="w-full max-w-[380px] bg-[#0a0e1a] select-none border border-white/[0.1]"
       style={{
         boxShadow: [
           "0 60px 120px rgba(10,14,26,0.5)",
           "0 24px 48px rgba(10,14,26,0.3)",
-          "0 0 0 0.5px rgba(255,255,255,0.08)",
         ].join(", "),
       }}
       aria-hidden="true"
