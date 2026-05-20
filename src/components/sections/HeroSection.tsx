@@ -24,103 +24,109 @@ function fadeUp(delay = 0) {
 function ClinicalReadoutCard() {
   return (
     <div
-      className="w-full max-w-[360px] bg-[#0a0e1a] select-none"
-      style={{ boxShadow: "0 40px 80px rgba(10,14,26,0.18), 0 0 0 0.5px rgba(255,255,255,0.06)" }}
+      className="w-full max-w-[380px] bg-[#0a0e1a] select-none"
+      style={{
+        boxShadow: [
+          "0 60px 120px rgba(10,14,26,0.5)",
+          "0 24px 48px rgba(10,14,26,0.3)",
+          "0 0 0 0.5px rgba(255,255,255,0.08)",
+        ].join(", "),
+      }}
       aria-hidden="true"
     >
       {/* Header bar */}
-      <div className="flex items-center justify-between px-5 py-3 border-b border-white/8">
-        <span className="font-mono text-[9px] text-[#4b5563] uppercase tracking-[0.22em]">
+      <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/[0.07]">
+        <span className="font-mono text-[9px] text-[#6b7280] uppercase tracking-[0.24em]">
           Glenometrix Output
         </span>
         <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#1a5fae]" />
-          <span className="font-mono text-[9px] text-[#4b5563] uppercase tracking-[0.22em]">
+          <span className="w-2 h-2 rounded-full bg-[#1a5fae]" />
+          <span className="font-mono text-[9px] text-[#6b7280] uppercase tracking-[0.24em]">
             RUO
           </span>
         </div>
       </div>
 
       {/* Primary metrics */}
-      <div className="grid grid-cols-2 gap-0 border-b border-white/8">
-        <div className="px-5 py-5 border-r border-white/8">
-          <div className="font-mono text-[9px] text-[#4b5563] uppercase tracking-[0.2em] mb-2">
+      <div className="grid grid-cols-2 border-b border-white/[0.07]">
+        <div className="px-5 py-6 border-r border-white/[0.07]">
+          <div className="font-mono text-[9px] text-[#6b7280] uppercase tracking-[0.22em] mb-3">
             Bone Loss
           </div>
           <div
-            className="font-mono text-white font-semibold leading-none"
-            style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", letterSpacing: "-0.04em" }}
+            className="font-mono text-white font-bold leading-none"
+            style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", letterSpacing: "-0.05em" }}
           >
             18.4%
           </div>
-          <div className="font-mono text-[9px] text-[#374151] mt-2 uppercase tracking-wider">
+          <div className="font-mono text-[9px] text-[#4b5563] mt-2.5 uppercase tracking-wider">
             Critical &gt; 20%
           </div>
         </div>
-        <div className="px-5 py-5">
-          <div className="font-mono text-[9px] text-[#4b5563] uppercase tracking-[0.2em] mb-2">
+        <div className="px-5 py-6">
+          <div className="font-mono text-[9px] text-[#6b7280] uppercase tracking-[0.22em] mb-3">
             ISIS Score
           </div>
           <div
-            className="font-mono text-white font-semibold leading-none"
-            style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", letterSpacing: "-0.04em" }}
+            className="font-mono text-white font-bold leading-none"
+            style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", letterSpacing: "-0.05em" }}
           >
-            7<span className="text-[#374151] text-base font-normal">/10</span>
+            7<span className="text-[#4b5563] text-lg font-normal">/10</span>
           </div>
-          <div className="font-mono text-[9px] text-[#374151] mt-2 uppercase tracking-wider">
+          <div className="font-mono text-[9px] text-[#4b5563] mt-2.5 uppercase tracking-wider">
             Threshold ≥ 7
           </div>
         </div>
       </div>
 
       {/* Risk status */}
-      <div className="flex items-center gap-5 px-5 py-4 border-b border-white/8">
+      <div className="flex items-center gap-5 px-5 py-4 border-b border-white/[0.07]">
         <span className="inline-flex items-center gap-2">
-          <span className="w-1.5 h-1.5 bg-[#dc2626] flex-shrink-0" />
-          <span className="font-mono text-[10px] text-[#dc2626] uppercase tracking-[0.18em]">
+          <span className="w-2 h-2 bg-[#dc2626] flex-shrink-0" />
+          <span className="font-mono text-[10px] text-[#ef4444] uppercase tracking-[0.18em] font-medium">
             High Risk
           </span>
         </span>
         <span className="inline-flex items-center gap-2">
-          <span className="w-1.5 h-1.5 bg-amber-400 flex-shrink-0" />
-          <span className="font-mono text-[10px] text-amber-400 uppercase tracking-[0.18em]">
+          <span className="w-2 h-2 bg-amber-400 flex-shrink-0" />
+          <span className="font-mono text-[10px] text-amber-400 uppercase tracking-[0.18em] font-medium">
             Off-Track
           </span>
         </span>
-        <span className="ml-auto font-mono text-[9px] text-[#374151] uppercase tracking-wider">
+        <span className="ml-auto font-mono text-[9px] text-[#4b5563] uppercase tracking-wider">
           0.6s
         </span>
       </div>
 
       {/* Glenoid track measurement bar */}
-      <div className="px-5 py-4 border-b border-white/8">
-        <div className="flex items-center justify-between mb-2">
-          <span className="font-mono text-[9px] text-[#4b5563] uppercase tracking-[0.2em]">
+      <div className="px-5 py-5 border-b border-white/[0.07]">
+        <div className="flex items-center justify-between mb-3">
+          <span className="font-mono text-[9px] text-[#6b7280] uppercase tracking-[0.22em]">
             Glenoid Track
           </span>
-          <span className="font-mono text-[9px] text-white/50">21.4mm / 24.8mm</span>
+          <span className="font-mono text-[9px] text-white/60">21.4mm / 24.8mm</span>
         </div>
-        <div className="relative h-1 bg-white/8 overflow-visible">
+        <div className="relative h-1.5 bg-white/[0.07] overflow-visible rounded-none">
           <div className="absolute inset-y-0 left-0 bg-[#1a5fae]" style={{ width: "86%" }} />
           {/* Hill-Sachs interval marker */}
           <div
-            className="absolute top-1/2 -translate-y-1/2 w-px h-3 bg-[#dc2626]"
+            className="absolute top-1/2 -translate-y-1/2 w-[1.5px] h-4 bg-[#ef4444]"
             style={{ left: "74%" }}
           />
         </div>
-        <div className="flex justify-between mt-1">
-          <span className="font-mono text-[8px] text-[#374151]">Track</span>
-          <span className="font-mono text-[8px] text-[#dc2626]">HSI</span>
+        <div className="flex justify-between mt-2">
+          <span className="font-mono text-[8px] text-[#4b5563] uppercase tracking-wider">Track</span>
+          <span className="font-mono text-[8px] text-[#ef4444] uppercase tracking-wider">HSI</span>
         </div>
       </div>
 
       {/* Decision pathway */}
-      <div className="px-5 py-4">
-        <div className="border-l border-[#1a5fae] pl-3">
-          <div className="font-mono text-[9px] text-[#4b5563] uppercase tracking-[0.2em] mb-1.5">
+      <div className="px-5 py-5">
+        <div className="border-l-2 border-[#1a5fae] pl-4">
+          <div className="font-mono text-[9px] text-[#6b7280] uppercase tracking-[0.22em] mb-2">
             Decision
           </div>
-          <p className="font-sans text-white/60 text-[11px] leading-snug italic">
+          <p className="font-sans text-white/75 text-[12px] leading-relaxed">
             Bone block procedure indicated. Latarjet or Eden-Hybinette recommended.
           </p>
         </div>
