@@ -22,9 +22,9 @@ export function GlenometrixLogo({
 }: GlenometrixLogoProps) {
   const isLight = variant === "light";
 
-  const textColor = isLight ? "text-white" : "text-[#0a0e1a]";
+  const textColor = isLight ? "text-white" : "text-[#0a0a0a]";
   const accentColor = isLight ? "text-white/70" : "text-[#1a5fae]";
-  const fontSize = Math.round(markSize * 0.52);
+  const fontSize = Math.round(markSize * 0.6);
 
   return (
     <div
@@ -59,8 +59,8 @@ export function GlenometrixLogo({
 
       {/* Wordmark with blue X accent */}
       <span
-        className={cn("font-sans font-bold tracking-tight", textColor)}
-        style={{ fontSize, lineHeight: 1, letterSpacing: "-0.03em" }}
+        className={cn("font-sans font-black tracking-tight", textColor)}
+        style={{ fontSize, lineHeight: 1, letterSpacing: "-0.045em" }}
       >
         Glenometri
         <span className={cn("font-bold", accentColor)}>X</span>
