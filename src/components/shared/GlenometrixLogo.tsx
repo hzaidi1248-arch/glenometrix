@@ -31,9 +31,16 @@ export function GlenometrixLogo({
       className={cn("flex items-center gap-2.5 select-none", className)}
       aria-label="GlenometriX"
     >
-      {/* Mark: crop the PNG to its square circle portion */}
+      {/* Mark: crop the PNG to its circular mark portion only.
+          Container width is 88% of markSize — the circle ends at ~86% of
+          the natural image height, safely before the wordmark begins (~96%). */}
       <div
-        style={{ width: markSize, height: markSize, overflow: "hidden", flexShrink: 0 }}
+        style={{
+          width: Math.round(markSize * 0.88),
+          height: markSize,
+          overflow: "hidden",
+          flexShrink: 0,
+        }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -41,8 +48,9 @@ export function GlenometrixLogo({
           alt=""
           aria-hidden="true"
           style={{
+            display: "block",
             height: markSize,
-            width: "auto",
+            width: Math.round(markSize * (500 / 166)),
             maxWidth: "none",
             filter: isLight ? "brightness(0) invert(1)" : "none",
           }}
