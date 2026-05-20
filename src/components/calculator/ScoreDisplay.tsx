@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import type { RiskScore } from "@/lib/clinical/types";
 import { ISISBreakdown } from "./ISISBreakdown";
 
@@ -54,22 +55,20 @@ export function ScoreDisplay({ result }: ScoreDisplayProps) {
       {/* Risk + track status */}
       <div className="flex flex-wrap gap-6">
         <span className="inline-flex items-center gap-2">
-          <span className={`w-1.5 h-1.5 flex-shrink-0 ${risk.dot}`} />
-          <span className={`font-mono text-[10px] uppercase tracking-[0.18em] ${risk.text}`}>
+          <span className={cn("w-1.5 h-1.5 flex-shrink-0", risk.dot)} />
+          <span className={cn("font-mono text-[10px] uppercase tracking-[0.18em]", risk.text)}>
             {risk.label}
           </span>
         </span>
         <span className="inline-flex items-center gap-2">
-          <span
-            className={`w-1.5 h-1.5 flex-shrink-0 ${
-              result.trackStatus === "off-track" ? "bg-amber-400" : "bg-[#16a34a]"
-            }`}
-          />
-          <span
-            className={`font-mono text-[10px] uppercase tracking-[0.18em] ${
-              result.trackStatus === "off-track" ? "text-amber-600" : "text-[#16a34a]"
-            }`}
-          >
+          <span className={cn(
+            "w-1.5 h-1.5 flex-shrink-0",
+            result.trackStatus === "off-track" ? "bg-amber-400" : "bg-[#16a34a]"
+          )} />
+          <span className={cn(
+            "font-mono text-[10px] uppercase tracking-[0.18em]",
+            result.trackStatus === "off-track" ? "text-amber-600" : "text-[#16a34a]"
+          )}>
             {result.trackStatus === "off-track" ? "Off-Track" : "On-Track"}
           </span>
         </span>

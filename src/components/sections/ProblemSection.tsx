@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
 
 const { problem } = siteConfig;
@@ -44,11 +45,11 @@ export function ProblemSection() {
           {problem.stats.map((stat, i) => (
             <div
               key={stat.value}
-              className={`flex flex-col gap-4 py-10 border-b sm:border-b-0 border-white/8 ${
-                i > 0 ? "sm:border-l sm:border-white/8 sm:pl-10" : ""
-              } ${i < problem.stats.length - 1 && i > 0 ? "" : ""} ${
-                i === 0 ? "sm:pr-10" : i === 1 ? "sm:pr-10" : ""
-              }`}
+              className={cn(
+                "flex flex-col gap-4 py-10 border-b sm:border-b-0 border-white/8",
+                i > 0 && "sm:border-l sm:border-white/8 sm:pl-10",
+                i < problem.stats.length - 1 && "sm:pr-10"
+              )}
             >
               <span
                 className="font-display italic text-white leading-none"

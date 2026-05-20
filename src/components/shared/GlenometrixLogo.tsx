@@ -59,11 +59,11 @@ export function GlenometrixLogo({
 
       {/* Wordmark with blue X accent */}
       <span
-        className={cn("font-sans font-black tracking-tight", textColor)}
+        className={cn("font-sans font-extrabold tracking-tight", textColor)}
         style={{ fontSize, lineHeight: 1, letterSpacing: "-0.045em" }}
       >
         Glenometri
-        <span className={cn("font-bold", accentColor)}>X</span>
+        <span className={cn("font-extrabold", accentColor)}>X</span>
       </span>
     </div>
   );
