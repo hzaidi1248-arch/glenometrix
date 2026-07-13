@@ -204,9 +204,9 @@ export function HeroSection() {
               {...fadeUp(0.85)}
             >
               {[
-                { value: "40%", label: "recurrence w/ ISIS ≥ 7" },
-                { value: "20%", label: "critical bone loss threshold" },
-                { value: "< 60s", label: "AI assessment time" },
+                { value: "ICC 1.00", label: "perfect reproducibility" },
+                { value: "ICC 0.87", label: "agreement with expert clinicians" },
+                { value: "88%", label: "concordance across bone loss categories" },
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col gap-0.5">
                   <span className="font-mono font-semibold text-[#0a0e1a] text-sm" style={{ letterSpacing: "-0.02em" }}>

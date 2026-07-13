@@ -23,7 +23,7 @@ export function OutputPreview() {
             className="font-display italic text-[#0a0e1a] leading-tight"
             style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)", letterSpacing: "-0.025em" }}
           >
-            From scan to structured clinical output.
+            From 3D CT scan to structured surgical decision.
           </h2>
         </div>
 

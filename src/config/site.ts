@@ -1,7 +1,10 @@
 /**
  * All editable copy and site configuration lives here.
  * Components import from this file — no strings hardcoded in JSX.
- * Lines marked TODO: replace with Moin's clinical statements when available.
+ *
+ * Publication stats sourced from:
+ * Khan M et al. "GlenometriX: A Reliable Tool for Quantifying Glenoid Bone Loss"
+ * McMaster University — manuscript in submission, 2026.
  */
 
 export const siteConfig = {
@@ -22,48 +25,43 @@ export const siteConfig = {
   },
 
   trustStrip: {
-    label: "Clinical algorithms",
+    label: "Evidence base",
     items: [
+      "Khan et al. — GlenometriX Validation · McMaster University 2026",
       "Balg & Boileau — ISIS Score · JBJS 2007",
       "Di Giacomo et al. — Glenoid Track · Arthroscopy 2014",
       "Burkhart & De Beer — Critical Threshold · Arthroscopy 2000",
-      "OrthoEvidence ACE Grade I Evidence Base",
     ],
   },
 
   hero: {
-    badge: "Limited Research Access — Phase 0",
-    // TODO: Replace headline with Moin's preferred positioning statement
+    badge: "Research Access",
     headline: "Quantify What Others",
     headlineAccent: "Estimate.",
-    // TODO: Replace with Moin's clinical authority statement
     subhead:
-      "Glenometrix delivers objective, reproducible glenoid bone loss quantification — the critical variable surgeons need before every shoulder instability case.",
+      "Glenometrix delivers AI-assisted glenoid bone loss quantification with ICC 0.87 agreement against expert clinicians — the objective measurement surgeons need before every shoulder instability case.",
     cta: { label: "Upload a Scan", href: "#upload" },
     ctaSecondary: { label: "See the Science", href: "#metric" },
   },
 
   problem: {
-    // TODO: Replace with Moin's problem framing statement
-    headline: "Bone loss changes everything. Most tools don't measure it.",
-    // Updated from Moin's clinical framing notes (May 2026)
+    headline: "Bone loss changes everything. Most tools don't measure it reliably or accurately.",
     body: "Shoulder instability outcomes hinge on many factors; however, a critical one — glenoid bone loss percentage — plays one of the most important roles in determining recurrent instability. Yet most clinical assessments rely on visual estimation and are prone to poor inter- and intra-rater reliability. Glenometrix automates this measurement with AI-assisted precision.",
     stats: [
-      // TODO: Replace with numbers from Moin's recent publication when provided
       {
         value: "40%",
         label: "Recurrence rate with Bankart repair when ISIS score ≥ 7",
-        source: "Balg & Boileau, 2007",
+        source: "Balg & Boileau, JBJS 2007",
       },
       {
         value: "20%",
-        label: "Critical bone loss threshold that mandates a bone block procedure",
-        source: "Burkhart & De Beer, 2000",
+        label: "Critical bone loss threshold mandating a bone block procedure",
+        source: "Burkhart & De Beer, Arthroscopy 2000",
       },
       {
-        value: "3×",
-        label: "Faster assessment with AI segmentation vs. manual CT measurement",
-        source: "TODO: Replace with publication figure",
+        value: "0.87",
+        label: "Inter-rater ICC against 5 expert clinicians — 3 MSK radiologists, 2 orthopaedic surgeons",
+        source: "Khan et al., McMaster University 2026",
       },
     ],
   },
@@ -71,23 +69,22 @@ export const siteConfig = {
   metric: {
     headline: "The Glenometrix Score:",
     headlineAccent: "Objective. Reproducible. Instant.",
-    // TODO: Replace with Moin's description of the metric
-    body: "Upload a de-identified CT scan. Glenometrix automatically segments the glenoid surface, calculates bone loss percentage against a contralateral reference, and delivers a structured clinical output — including ISIS scoring, on/off-track assessment, and a decision pathway.",
+    body: "Upload a de-identified 3D CT scan. GlenometriX uses a U-Net convolutional neural network to automatically segment the glenoid from the affected side alone — no contralateral imaging required — applies a best-fit circle algorithm, and delivers a structured clinical output including ISIS scoring, on/off-track assessment, and a decision pathway.",
     steps: [
       {
         icon: "UploadCloud",
         title: "Upload CT Scan",
-        body: "De-identified imaging only. Non-PHI DICOM, JPEG, or PNG accepted.",
+        body: "De-identified 3D CT imaging only. En face glenoid reconstruction. DICOM, JPEG, or PNG accepted.",
       },
       {
         icon: "ScanLine",
         title: "AI Segmentation",
-        body: "Automated glenoid surface analysis quantifies bone loss against the contralateral reference.",
+        body: "U-Net CNN segments the glenoid, identifies anterior and posterior margins, and applies a best-fit circle algorithm to calculate percentage bone loss.",
       },
       {
         icon: "BarChart3",
         title: "Glenometrix Score",
-        body: "Bone loss %, ISIS score, on/off-track status, and a rule-based decision pathway.",
+        body: "Bone loss %, ISIS score, on/off-track status, and a rule-based surgical decision pathway — Bankart, remplissage, or bony augmentation.",
       },
     ],
   },
