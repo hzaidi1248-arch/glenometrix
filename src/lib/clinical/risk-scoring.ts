@@ -12,7 +12,9 @@ import type { ClinicalInput, ISISResult, RiskCategory } from "./types";
  * Maximum total: 10 points.
  */
 export function computeISISScore(input: ClinicalInput): ISISResult {
-  const agePoints = input.ageAtFirstDislocation < 20 ? 2 : 0;
+  // Guard: an unentered age (0) must not award points during live scoring.
+  const agePoints =
+    input.ageAtFirstDislocation > 0 && input.ageAtFirstDislocation < 20 ? 2 : 0;
   const sportLevelPoints = input.competitiveSport ? 2 : 0;
   const sportTypePoints = input.contactOrOverheadSport ? 1 : 0;
   const hyperlaxityPoints = input.anteriorHyperlaxity ? 1 : 0;
@@ -64,4 +66,34 @@ export function computeRecurrenceRisk(riskCategory: RiskCategory): string {
     critical: "≥ 70%; bone block procedure required",
   };
   return map[riskCategory];
+}
+
+/** Surgical recommendation driven by the ISIS threshold (Balg & Boileau, 2007). */
+export interface IsisRecommendation {
+  procedure: "bankart" | "latarjet";
+  label: string;
+  detail: string;
+}
+
+/**
+ * Map an ISIS total to the published surgical recommendation.
+ * ISIS ≤ 6  → arthroscopic Bankart repair (recurrence ≈ 10%).
+ * ISIS ≥ 7  → Latarjet / open bony procedure (arthroscopic recurrence ≈ 70%).
+ * Reference: Balg F, Boileau P. JBJS Br. 2007;89(11):1470-1477.
+ */
+export function getIsisRecommendation(isisTotal: number): IsisRecommendation {
+  if (isisTotal <= 6) {
+    return {
+      procedure: "bankart",
+      label: "Arthroscopic Bankart repair",
+      detail:
+        "ISIS ≤ 6 — arthroscopic soft-tissue repair is appropriate, with a published recurrence rate of approximately 10%.",
+    };
+  }
+  return {
+    procedure: "latarjet",
+    label: "Latarjet / open bony procedure",
+    detail:
+      "ISIS ≥ 7 — isolated arthroscopic Bankart repair carries a recurrence rate near 70%; a bony augmentation procedure is recommended.",
+  };
 }

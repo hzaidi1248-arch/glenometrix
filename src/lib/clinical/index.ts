@@ -16,7 +16,9 @@ export {
   computeISISScore,
   computeRiskCategory,
   computeRecurrenceRisk,
+  getIsisRecommendation,
 } from "./risk-scoring";
+export type { IsisRecommendation } from "./risk-scoring";
 
 export { computeBoneLossPercent, interpretBoneLoss } from "./bone-loss";
 

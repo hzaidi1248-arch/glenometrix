@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
+import { RotateCcw } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,228 +12,171 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  computeISISScore,
-  computeRiskCategory,
-  computeRecurrenceRisk,
-  computeBoneLossPercent,
-  computeTrackStatus,
-  getDecisionSummary,
-  validateClinicalInput,
-} from "@/lib/clinical";
-import type { ClinicalInput, RiskScore } from "@/lib/clinical/types";
+import type { ClinicalInput } from "@/lib/clinical/types";
 
 interface RiskFormProps {
-  onResult: (score: RiskScore) => void;
+  value: ClinicalInput;
+  onChange: (next: ClinicalInput) => void;
+  onReset: () => void;
 }
 
-const INITIAL: ClinicalInput = {
-  ageAtFirstDislocation: 0,
-  competitiveSport: false,
-  contactOrOverheadSport: false,
-  anteriorHyperlaxity: false,
-  hillSachsOnApXray: false,
-  glenoidBoneLossOnApXray: false,
-  glenoidWidth: 0,
-  defectWidth: 0,
-  hillSachsWidth: 0,
-  hslToRotatorCuffOffset: 0,
-  priorDislocationCount: 1,
-  sex: "male",
-};
-
-export function RiskForm({ onResult }: RiskFormProps) {
-  const [form, setForm] = useState<ClinicalInput>(INITIAL);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [loading, setLoading] = useState(false);
-
-  function setNum(
-    field: keyof ClinicalInput,
-    raw: string
-  ) {
-    const value = parseFloat(raw) || 0;
-    setForm((prev) => ({ ...prev, [field]: value }));
-    setErrors((prev) => {
-      const next = { ...prev };
-      delete next[field];
-      return next;
-    });
+/**
+ * Live clinical input form — fully controlled by the parent.
+ * No submit: every change flows up immediately so results update in real time
+ * (matching the orthodoc ISIS calculator interaction model).
+ */
+export function RiskForm({ value, onChange, onReset }: RiskFormProps) {
+  function set<K extends keyof ClinicalInput>(field: K, v: ClinicalInput[K]) {
+    onChange({ ...value, [field]: v });
   }
 
-  function setBool(field: keyof ClinicalInput, value: boolean) {
-    setForm((prev) => ({ ...prev, [field]: value }));
+  function setNum(field: keyof ClinicalInput, raw: string) {
+    set(field, (parseFloat(raw) || 0) as ClinicalInput[typeof field]);
   }
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const validation = validateClinicalInput(form);
-    if (!validation.valid) {
-      const errs: Record<string, string> = {};
-      validation.errors.forEach((err) => {
-        errs[err.field] = err.message;
-      });
-      setErrors(errs);
-      return;
-    }
-
-    setLoading(true);
-    // Yield to browser paint, then compute synchronously
-    setTimeout(() => {
-      const isis = computeISISScore(form);
-      const boneLossPercent = computeBoneLossPercent(form);
-      const track = computeTrackStatus(form);
-      const riskCategory = computeRiskCategory(isis.total, boneLossPercent);
-      const recurrenceRisk = computeRecurrenceRisk(riskCategory);
-      const decisionPathway = getDecisionSummary({
-        riskCategory,
-        boneLossPercent,
-        trackStatus: track.status,
-        isisTotal: isis.total,
-      });
-
-      const result: RiskScore = {
-        isis,
-        boneLossPercent,
-        trackStatus: track.status,
-        riskCategory,
-        recurrenceRisk,
-        decisionPathway,
-      };
-
-      setLoading(false);
-      onResult(result);
-    }, 0);
-  }
-
-  function handleReset() {
-    setForm(INITIAL);
-    setErrors({});
-  }
+  const ageEarns =
+    value.ageAtFirstDislocation > 0 && value.ageAtFirstDislocation < 20;
+  const defectExceedsGlenoid =
+    value.glenoidWidth > 0 && value.defectWidth > value.glenoidWidth;
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6">
       <p className="font-sans text-[#64748b] text-sm leading-relaxed">
-        Enter clinical measurements to generate an ISIS score, bone loss
-        percentage, on/off-track status, and decision pathway.{" "}
+        Results update live as you enter each factor.{" "}
         <span className="font-medium text-[#0a0e1a]">Research use only.</span>
       </p>
 
-      {/* ISIS Score Inputs */}
+      {/* ── ISIS Score Factors ─────────────────────────────────────────── */}
       <fieldset className="flex flex-col gap-4">
         <legend className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] mb-2">
           ISIS Score Factors
         </legend>
 
-        <NumField
-          id="ageAtFirst"
-          label="Age at first dislocation (years)"
-          value={form.ageAtFirstDislocation || ""}
-          onChange={(v) => setNum("ageAtFirstDislocation", v)}
-          error={errors.ageAtFirstDislocation}
-          placeholder="e.g. 18"
-          min={10}
-          max={90}
-        />
+        {/* Age — real value, with a live points indicator */}
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-baseline justify-between gap-2">
+            <Label htmlFor="ageAtFirst" className="font-sans text-[#0a0e1a] text-sm">
+              Age at first dislocation (years)
+            </Label>
+            <span
+              className={cn(
+                "font-mono text-[10px] flex-shrink-0 tabular-nums",
+                ageEarns ? "text-[#1a5fae] font-semibold" : "text-[#9ca3af]"
+              )}
+            >
+              {ageEarns ? "+2 pts" : "0 pts"}
+            </span>
+          </div>
+          <Input
+            id="ageAtFirst"
+            type="number"
+            inputMode="numeric"
+            value={value.ageAtFirstDislocation || ""}
+            onChange={(e) => setNum("ageAtFirstDislocation", e.target.value)}
+            placeholder="e.g. 18"
+            min={10}
+            max={90}
+            className="rounded-none font-sans text-sm focus-visible:ring-0 focus-visible:border-[#1a5fae]"
+          />
+          <p className="font-mono text-[9px] text-[#c4c4c2] uppercase tracking-wider">
+            &lt; 20 years scores 2 points
+          </p>
+        </div>
 
-        <BoolField
-          id="competitiveSport"
+        <SegField
           label="Competitive-level sport participation"
           hint="+2 pts"
-          value={form.competitiveSport}
-          onChange={(v) => setBool("competitiveSport", v)}
+          value={value.competitiveSport}
+          onChange={(v) => set("competitiveSport", v)}
         />
-        <BoolField
-          id="contactSport"
+        <SegField
           label="Contact or forced overhead arm elevation sport"
           hint="+1 pt"
-          value={form.contactOrOverheadSport}
-          onChange={(v) => setBool("contactOrOverheadSport", v)}
+          value={value.contactOrOverheadSport}
+          onChange={(v) => set("contactOrOverheadSport", v)}
         />
-        <BoolField
-          id="hyperlaxity"
+        <SegField
           label="Anterior shoulder or GHIS hyperlaxity"
           hint="+1 pt"
-          value={form.anteriorHyperlaxity}
-          onChange={(v) => setBool("anteriorHyperlaxity", v)}
+          value={value.anteriorHyperlaxity}
+          onChange={(v) => set("anteriorHyperlaxity", v)}
         />
-        <BoolField
-          id="hillSachs"
+        <SegField
           label="Hill-Sachs lesion visible on AP X-ray (external rotation)"
           hint="+2 pts"
-          value={form.hillSachsOnApXray}
-          onChange={(v) => setBool("hillSachsOnApXray", v)}
+          value={value.hillSachsOnApXray}
+          onChange={(v) => set("hillSachsOnApXray", v)}
         />
-        <BoolField
-          id="glenoidLoss"
+        <SegField
           label="Loss of inferior glenoid contour on AP X-ray"
           hint="+2 pts"
-          value={form.glenoidBoneLossOnApXray}
-          onChange={(v) => setBool("glenoidBoneLossOnApXray", v)}
+          value={value.glenoidBoneLossOnApXray}
+          onChange={(v) => set("glenoidBoneLossOnApXray", v)}
         />
       </fieldset>
 
-      {/* Bone Loss Measurements */}
+      {/* ── Bone Loss Measurements ─────────────────────────────────────── */}
       <fieldset className="flex flex-col gap-4">
         <legend className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] mb-2">
-          Bone Loss Measurements (mm)
+          Glenoid Bone Loss (mm) — optional
         </legend>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <NumField
             id="glenoidWidth"
             label="Contralateral glenoid width"
-            value={form.glenoidWidth || ""}
+            value={value.glenoidWidth || ""}
             onChange={(v) => setNum("glenoidWidth", v)}
-            error={errors.glenoidWidth}
             placeholder="mm"
           />
           <NumField
             id="defectWidth"
             label="Glenoid bone defect width"
-            value={form.defectWidth || ""}
+            value={value.defectWidth || ""}
             onChange={(v) => setNum("defectWidth", v)}
-            error={errors.defectWidth}
             placeholder="mm"
+            error={
+              defectExceedsGlenoid
+                ? "Defect exceeds glenoid width."
+                : undefined
+            }
           />
         </div>
       </fieldset>
 
-      {/* Track Status Inputs */}
+      {/* ── Glenoid Track ──────────────────────────────────────────────── */}
       <fieldset className="flex flex-col gap-4">
         <legend className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] mb-2">
-          Glenoid Track Assessment (mm)
+          Glenoid Track Assessment (mm) — optional
         </legend>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <NumField
             id="hillSachsWidth"
             label="Hill-Sachs lesion width"
-            value={form.hillSachsWidth || ""}
+            value={value.hillSachsWidth || ""}
             onChange={(v) => setNum("hillSachsWidth", v)}
-            error={errors.hillSachsWidth}
             placeholder="mm"
           />
           <NumField
             id="hslOffset"
             label="HSL medial edge to rotator cuff footprint"
-            value={form.hslToRotatorCuffOffset || ""}
+            value={value.hslToRotatorCuffOffset || ""}
             onChange={(v) => setNum("hslToRotatorCuffOffset", v)}
-            error={errors.hslToRotatorCuffOffset}
             placeholder="mm"
           />
         </div>
       </fieldset>
 
-      {/* Context */}
+      {/* ── Clinical Context ───────────────────────────────────────────── */}
       <fieldset className="flex flex-col gap-4">
         <legend className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] mb-2">
-          Clinical Context
+          Clinical Context — optional
         </legend>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <NumField
             id="priorDislocations"
             label="Total prior dislocation count"
-            value={form.priorDislocationCount || ""}
+            value={value.priorDislocationCount || ""}
             onChange={(v) => setNum("priorDislocationCount", v)}
-            error={errors.priorDislocationCount}
             placeholder="e.g. 3"
             min={1}
           />
@@ -242,15 +185,10 @@ export function RiskForm({ onResult }: RiskFormProps) {
               Biological sex
             </Label>
             <Select
-              value={form.sex}
-              onValueChange={(v) =>
-                setForm((p) => ({
-                  ...p,
-                  sex: v as ClinicalInput["sex"],
-                }))
-              }
+              value={value.sex}
+              onValueChange={(v) => set("sex", v as ClinicalInput["sex"])}
             >
-              <SelectTrigger id="sex" className="font-sans text-sm">
+              <SelectTrigger id="sex" className="font-sans text-sm rounded-none">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -263,31 +201,18 @@ export function RiskForm({ onResult }: RiskFormProps) {
         </div>
       </fieldset>
 
-      <div className="flex gap-3 pt-2">
-        <Button
-          type="submit"
-          disabled={loading}
-          className="flex-1 sm:flex-none rounded-none bg-[#0a0e1a] hover:bg-[#1a5fae] text-white font-sans font-medium gap-2 disabled:opacity-60"
-        >
-          {loading ? (
-            <>
-              <Loader2 size={15} className="animate-spin" />
-              Computing…
-            </>
-          ) : (
-            "Calculate Score"
-          )}
-        </Button>
+      <div className="flex pt-1">
         <Button
           type="button"
           variant="outline"
-          onClick={handleReset}
-          className="rounded-none font-sans text-[#64748b]"
+          onClick={onReset}
+          className="rounded-none font-sans text-[#64748b] gap-2"
         >
+          <RotateCcw size={14} />
           Reset
         </Button>
       </div>
-    </form>
+    </div>
   );
 }
 
@@ -320,13 +245,17 @@ function NumField({
       <Input
         id={id}
         type="number"
+        inputMode="decimal"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         min={min}
         max={max}
         step="0.1"
-        className={`rounded-none font-sans text-sm focus-visible:ring-0 focus-visible:border-[#1a5fae] ${error ? "border-[#dc2626]" : ""}`}
+        className={cn(
+          "rounded-none font-sans text-sm focus-visible:ring-0 focus-visible:border-[#1a5fae]",
+          error && "border-[#dc2626]"
+        )}
         aria-describedby={error ? `${id}-error` : undefined}
         aria-invalid={!!error}
       />
@@ -339,37 +268,65 @@ function NumField({
   );
 }
 
-function BoolField({
-  id,
+function SegField({
   label,
   hint,
   value,
   onChange,
 }: {
-  id: string;
   label: string;
   hint: string;
   value: boolean;
   onChange: (v: boolean) => void;
 }) {
   return (
-    <label
-      htmlFor={id}
-      className="flex items-start gap-3 cursor-pointer group py-0.5"
+    <div className="flex flex-col gap-1.5">
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="font-sans text-sm text-[#0a0e1a] leading-snug">
+          {label}
+        </span>
+        <span className="font-mono text-[10px] text-[#1a5fae] flex-shrink-0">
+          {hint}
+        </span>
+      </div>
+      <div
+        className="grid grid-cols-2 gap-px bg-[#e5e5e3]"
+        role="group"
+        aria-label={label}
+      >
+        <SegButton active={value} onClick={() => onChange(true)}>
+          Yes
+        </SegButton>
+        <SegButton active={!value} onClick={() => onChange(false)}>
+          No
+        </SegButton>
+      </div>
+    </div>
+  );
+}
+
+function SegButton({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={cn(
+        "py-2.5 font-sans text-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1a5fae] focus-visible:ring-inset",
+        active
+          ? "bg-[#0a0e1a] text-white font-medium"
+          : "bg-white text-[#64748b] hover:text-[#0a0e1a]"
+      )}
     >
-      <input
-        id={id}
-        type="checkbox"
-        checked={value}
-        onChange={(e) => onChange(e.target.checked)}
-        className="mt-0.5 h-4 w-4 rounded border-[#e2e8f0] accent-[#1a5fae] cursor-pointer flex-shrink-0"
-      />
-      <span className="font-sans text-sm text-[#0a0e1a] group-hover:text-[#1a5fae] transition-colors leading-snug flex-1">
-        {label}
-      </span>
-      <span className="font-sans text-xs text-[#1a5fae] font-medium flex-shrink-0 mt-0.5">
-        {hint}
-      </span>
-    </label>
+      {children}
+    </button>
   );
 }
