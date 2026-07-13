@@ -18,8 +18,8 @@ export default function LandingPage() {
       <TrustStrip />
       <ProblemSection />
       <MetricSection />
-      <UploadSection />
       <OutputPreview />
+      <UploadSection />
       <EarlyAccessSection />
       <Footer />
     </main>

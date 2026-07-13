@@ -17,9 +17,9 @@ export const siteConfig = {
 
   nav: {
     links: [
-      { label: "The Score", href: "/#metric" },
-      { label: "Research Access", href: "/#upload" },
-      { label: "Dashboard", href: "/dashboard" },
+      { label: "How It Works", href: "/#how" },
+      { label: "The Science", href: "/#science" },
+      { label: "Calculator", href: "/dashboard/calculator" },
     ],
     cta: { label: "Request Access", href: "/#access" },
   },
@@ -40,8 +40,8 @@ export const siteConfig = {
     headlineAccent: "Estimate.",
     subhead:
       "Glenometrix delivers AI-assisted glenoid bone loss quantification with ICC 0.87 agreement against expert clinicians — the objective measurement surgeons need before every shoulder instability case.",
-    cta: { label: "Upload a Scan", href: "#upload" },
-    ctaSecondary: { label: "See the Science", href: "#metric" },
+    cta: { label: "Try the Calculator", href: "/dashboard/calculator" },
+    ctaSecondary: { label: "Request Access", href: "#access" },
   },
 
   problem: {
@@ -98,6 +98,15 @@ export const siteConfig = {
       "Do not upload images containing patient-identifiable information (name, DOB, MRN, accession number). This tool is for research purposes only and is not a clinical diagnostic device.",
     dropzoneText: "Drop de-identified CT imaging here",
     dropzoneSub: "DICOM · JPEG · PNG · Max 50 MB",
+
+    // Landing-page preview copy (gated) — distinct from the dashboard tool above
+    landingLabel: "Gated — Request Access",
+    landingHeadline: "Automated CT Bone Loss Analysis",
+    landingBody:
+      "GlenometriX quantifies glenoid bone loss directly from a 3D CT scan using a validated AI model (ICC 0.87 agreement with expert clinicians). Full analysis is currently limited to research partners.",
+    landingNotice:
+      "AI CT analysis is rolling out to research partners. Request access to enable it at your institution.",
+    landingCta: "Request Access",
   },
 
   outputPreview: {

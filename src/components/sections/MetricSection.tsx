@@ -19,7 +19,7 @@ function staggerItem(i: number) {
 export function MetricSection() {
   return (
     <section
-      id="metric"
+      id="how"
       className="bg-[#fdfcfc] py-24 px-4 sm:px-6 lg:px-8"
       aria-labelledby="metric-heading"
     >
