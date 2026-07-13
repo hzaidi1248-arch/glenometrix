@@ -46,10 +46,10 @@ export const siteConfig = {
   problem: {
     // TODO: Replace with Moin's problem framing statement
     headline: "Bone loss changes everything. Most tools don't measure it.",
-    // TODO: Replace with Moin's clinical paragraph
-    body: "Shoulder instability outcomes hinge on a single variable — glenoid bone loss percentage. Yet most clinical assessments rely on visual estimation, X-ray approximation, or time-consuming manual segmentation. Glenometrix automates this measurement with AI-assisted precision.",
+    // Updated from Moin's clinical framing notes (May 2026)
+    body: "Shoulder instability outcomes hinge on many factors; however, a critical one — glenoid bone loss percentage — plays one of the most important roles in determining recurrent instability. Yet most clinical assessments rely on visual estimation and are prone to poor inter- and intra-rater reliability. Glenometrix automates this measurement with AI-assisted precision.",
     stats: [
-      // TODO: Replace values and labels with Moin's cited statistics
+      // TODO: Replace with numbers from Moin's recent publication when provided
       {
         value: "40%",
         label: "Recurrence rate with Bankart repair when ISIS score ≥ 7",
@@ -63,7 +63,7 @@ export const siteConfig = {
       {
         value: "3×",
         label: "Faster assessment with AI segmentation vs. manual CT measurement",
-        source: "TODO: Replace with Moin's figure",
+        source: "TODO: Replace with publication figure",
       },
     ],
   },
