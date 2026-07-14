@@ -9,9 +9,9 @@
 
 export const siteConfig = {
   name: "Glenometrix",
-  tagline: "Precision Shoulder Assessment. Powered by AI.",
+  tagline: "Glenoid Bone Loss, Measured.",
   description:
-    "AI-assisted glenoid bone loss quantification for shoulder instability research. Built by orthopedic surgeons, for orthopedic surgeons.",
+    "Glenoid bone loss quantification for shoulder instability research. Built by orthopedic surgeons, for orthopedic surgeons.",
   url: "https://glenometrix.com",
   copyright: `© ${new Date().getFullYear()} Glenometrix. All rights reserved.`,
 
@@ -27,10 +27,10 @@ export const siteConfig = {
   trustStrip: {
     label: "Evidence base",
     items: [
-      "Khan et al. — GlenometriX Validation · McMaster University 2026",
-      "Balg & Boileau — ISIS Score · JBJS 2007",
-      "Di Giacomo et al. — Glenoid Track · Arthroscopy 2014",
-      "Burkhart & De Beer — Critical Threshold · Arthroscopy 2000",
+      "Khan et al. · GlenometriX Validation · McMaster University 2026",
+      "Balg & Boileau · ISIS Score · JBJS 2007",
+      "Di Giacomo et al. · Glenoid Track · Arthroscopy 2014",
+      "Burkhart & De Beer · Critical Threshold · Arthroscopy 2000",
     ],
   },
 
@@ -39,14 +39,14 @@ export const siteConfig = {
     headline: "Quantify What Others",
     headlineAccent: "Estimate.",
     subhead:
-      "Glenometrix delivers AI-assisted glenoid bone loss quantification with ICC 0.87 agreement against expert clinicians — the objective measurement surgeons need before every shoulder instability case.",
+      "Glenometrix measures glenoid bone loss from 3D CT scans with ICC 0.87 agreement against expert clinicians. The objective measurement every shoulder instability case requires.",
     cta: { label: "Try the Calculator", href: "/dashboard/calculator" },
     ctaSecondary: { label: "Request Access", href: "#access" },
   },
 
   problem: {
     headline: "Bone loss changes everything. Most tools don't measure it reliably or accurately.",
-    body: "Shoulder instability outcomes hinge on many factors; however, a critical one — glenoid bone loss percentage — plays one of the most important roles in determining recurrent instability. Yet most clinical assessments rely on visual estimation and are prone to poor inter- and intra-rater reliability. Glenometrix automates this measurement with AI-assisted precision.",
+    body: "Shoulder instability outcomes hinge on many factors. Glenoid bone loss percentage is one of the most important variables in determining recurrent instability. Yet most clinical assessments rely on visual estimation, which carries documented poor inter- and intra-rater reliability. Glenometrix measures it objectively.",
     stats: [
       {
         value: "40%",
@@ -60,7 +60,7 @@ export const siteConfig = {
       },
       {
         value: "0.87",
-        label: "Inter-rater ICC against 5 expert clinicians — 3 MSK radiologists, 2 orthopaedic surgeons",
+        label: "Inter-rater ICC against 5 expert clinicians: 3 MSK radiologists, 2 orthopaedic surgeons",
         source: "Khan et al., McMaster University 2026",
       },
     ],
@@ -70,11 +70,11 @@ export const siteConfig = {
   science: {
     label: "The Science",
     headline: "Validated against five expert clinicians.",
-    body: "GlenometriX was developed on 90 annotated 3D-CT scans and validated on a separate cohort of 121 scans against five blinded, fellowship-trained experts — three MSK radiologists and two orthopaedic surgeons.",
+    body: "GlenometriX was developed on 90 annotated 3D-CT scans and validated on a separate cohort of 121 scans against five blinded, fellowship-trained experts: three MSK radiologists and two orthopaedic surgeons.",
     stats: [
       {
         value: "ICC 1.00",
-        label: "Perfect intra-rater reproducibility — a deterministic algorithm returns identical repeat measurements",
+        label: "Perfect intra-rater reproducibility. Deterministic algorithm: identical output on repeat measurements.",
       },
       {
         value: "ICC 0.87",
@@ -95,19 +95,19 @@ export const siteConfig = {
       },
       {
         value: "5",
-        label: "Blinded expert raters — 3 MSK radiologists and 2 orthopaedic surgeons",
+        label: "Blinded expert raters: 3 MSK radiologists and 2 orthopaedic surgeons",
       },
     ],
     method:
-      "A U-Net convolutional neural network segments the glenoid and applies a best-fit circle to the affected side alone — no contralateral scan required.",
+      "A U-Net convolutional neural network segments the glenoid and applies a best-fit circle to the affected side alone. No contralateral scan required.",
     citation:
-      "Khan et al. “GlenometriX: A Reliable Tool for Quantifying Glenoid Bone Loss.” McMaster University, 2026 — manuscript in submission.",
+      'Khan et al. "GlenometriX: A Reliable Tool for Quantifying Glenoid Bone Loss." McMaster University, 2026. Manuscript in submission.',
   },
 
   metric: {
     headline: "The Glenometrix Score:",
     headlineAccent: "Objective. Reproducible. Instant.",
-    body: "Upload a de-identified 3D CT scan. GlenometriX uses a U-Net convolutional neural network to automatically segment the glenoid from the affected side alone — no contralateral imaging required — applies a best-fit circle algorithm, and delivers a structured clinical output including ISIS scoring, on/off-track assessment, and a decision pathway.",
+    body: "Upload a de-identified 3D CT scan. GlenometriX uses a U-Net convolutional neural network to automatically segment the glenoid from the affected side alone. No contralateral imaging required. It then applies a best-fit circle algorithm, and delivers a structured clinical output including ISIS scoring, on/off-track assessment, and a decision pathway.",
     steps: [
       {
         icon: "UploadCloud",
@@ -122,7 +122,7 @@ export const siteConfig = {
       {
         icon: "BarChart3",
         title: "Glenometrix Score",
-        body: "Bone loss %, ISIS score, on/off-track status, and a rule-based surgical decision pathway — Bankart, remplissage, or bony augmentation.",
+        body: "Bone loss %, ISIS score, on/off-track status, and a rule-based decision pathway: Bankart, remplissage, or bony augmentation.",
       },
     ],
   },
@@ -138,7 +138,7 @@ export const siteConfig = {
     dropzoneSub: "DICOM · JPEG · PNG · Max 50 MB",
 
     // Landing-page preview copy (gated) — distinct from the dashboard tool above
-    landingLabel: "Gated — Request Access",
+    landingLabel: "Access Required",
     landingHeadline: "Automated CT Bone Loss Analysis",
     landingBody:
       "GlenometriX quantifies glenoid bone loss directly from a 3D CT scan using a validated AI model (ICC 0.87 agreement with expert clinicians). Full analysis is currently limited to research partners.",
@@ -160,7 +160,7 @@ export const siteConfig = {
 
   access: {
     headline: "Join the Research Pilot.",
-    body: "Apply for early access — orthopedic surgeons, sports medicine physicians, and shoulder researchers. Limited spots available.",
+    body: "Apply for early access. Open to orthopedic surgeons, sports medicine physicians, and shoulder researchers. Limited spots available.",
     successMessage:
       "You're on the list. We'll reach out when access opens in your region.",
     buttonLabel: "Apply for Access",
@@ -170,11 +170,11 @@ export const siteConfig = {
 
   ruo: {
     banner:
-      "Research Use Only — Not for Clinical Diagnostic Use",
+      "Research Use Only. Not for Clinical Diagnostic Use.",
     modal: {
-      title: "PHI Warning — Research Use Only",
+      title: "PHI Warning: Research Use Only",
       body: "Do not upload images containing patient-identifiable information. This tool is for research purposes only and is not cleared or approved for clinical diagnostic use. All results are for research only.",
-      confirm: "I understand — proceed with de-identified imaging only",
+      confirm: "I understand. Proceed with de-identified imaging only.",
     },
     footer:
       "Glenometrix is a research tool only. It is not cleared or approved by the FDA, Health Canada, or any regulatory body for clinical diagnostic use. All outputs are intended for research purposes only. Do not use to guide clinical decisions.",
@@ -186,7 +186,7 @@ export const siteConfig = {
       slug: "smith-nephew",
       tagline: "CORI Surgical System · REGENETEN · Shoulder Instability Solutions",
       description:
-        "Smith & Nephew offers comprehensive shoulder instability solutions including anatomic and reverse total shoulder arthroplasty systems, bone block instrumentation, and the CORI robotic-assisted platform.",
+        "Smith & Nephew provides shoulder instability solutions including anatomic and reverse total shoulder arthroplasty systems, bone block instrumentation, and the CORI robotic-assisted platform.",
       link: "https://www.smith-nephew.com",
       focus: "Bone block, arthroplasty, robotics",
     },
@@ -195,7 +195,7 @@ export const siteConfig = {
       slug: "arthrex",
       tagline: "Latarjet System · SutureBridge · Instability portfolio",
       description:
-        "Arthrex is the global leader in arthroscopic shoulder surgery, offering the comprehensive Latarjet instrumentation system, remplissage anchors, and the full Bankart repair portfolio.",
+        "Arthrex offers the Latarjet instrumentation system, remplissage anchors, and the full Bankart repair portfolio for arthroscopic shoulder surgery.",
       link: "https://www.arthrex.com",
       focus: "Latarjet, Bankart, remplissage",
     },
@@ -212,7 +212,7 @@ export const siteConfig = {
 
   research: {
     headline: "Clinical Evidence Library.",
-    body: "Summarized ACE-level literature from OrthoEvidence to inform treatment decisions in shoulder instability and glenoid bone loss — distinct from the GlenometriX validation study.",
+    body: "Summarized ACE-level literature from OrthoEvidence to inform treatment decisions in shoulder instability and glenoid bone loss. Separate from the GlenometriX validation study.",
     // TODO: Replace with live OrthoEvidence API feed when access is confirmed
     mockReports: [
       {

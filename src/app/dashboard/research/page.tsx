@@ -22,7 +22,7 @@ export default function ResearchPage() {
           {research.body}
         </p>
         <p className="font-mono text-[9px] text-[#c4c4c2] uppercase tracking-wider mt-3">
-          Live OrthoEvidence feed pending API access — displaying curated reference reports
+          Live OrthoEvidence feed pending API access. Displaying curated reference reports.
         </p>
       </div>
 

@@ -48,7 +48,7 @@ export function EarlyAccessSection() {
       <div className="max-w-7xl mx-auto">
         <div className="max-w-lg mx-auto text-center mb-10">
           <p className="font-mono text-[10px] text-[#1a5fae] uppercase tracking-[0.24em] mb-5">
-            Limited Access — Phase 0
+            Research Access
           </p>
           <h2
             id="access-heading"

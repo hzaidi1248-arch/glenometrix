@@ -87,13 +87,13 @@ export function getIsisRecommendation(isisTotal: number): IsisRecommendation {
       procedure: "bankart",
       label: "Arthroscopic Bankart repair",
       detail:
-        "ISIS ≤ 6 — arthroscopic soft-tissue repair is appropriate, with a published recurrence rate of approximately 10%.",
+        "ISIS ≤ 6: arthroscopic soft-tissue repair is appropriate, with a published recurrence rate of approximately 10%.",
     };
   }
   return {
     procedure: "latarjet",
     label: "Latarjet / open bony procedure",
     detail:
-      "ISIS ≥ 7 — isolated arthroscopic Bankart repair carries a recurrence rate near 70%; a bony augmentation procedure is recommended.",
+      "ISIS ≥ 7: isolated arthroscopic Bankart repair carries a recurrence rate near 70%. A bony augmentation procedure is recommended.",
   };
 }

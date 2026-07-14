@@ -53,7 +53,7 @@ export function CalculatorClient() {
       {/* Page header */}
       <div className="border-b border-[#e5e5e3] pb-6">
         <p className="font-mono text-[9px] text-[#1a5fae] uppercase tracking-[0.24em] mb-2">
-          Client-Side Only — No Data Transmitted
+          Client-side only. No data transmitted.
         </p>
         <h1
           className="font-display italic text-[#0a0e1a] mb-1"

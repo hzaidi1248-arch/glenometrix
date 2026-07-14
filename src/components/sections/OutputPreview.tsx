@@ -17,7 +17,7 @@ export function OutputPreview() {
         {/* Section header */}
         <div className="max-w-2xl mb-12">
           <p className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.24em] mb-4">
-            Sample analysis — research use only
+            Sample analysis. Research use only.
           </p>
           <h2
             className="font-display italic text-[#0a0e1a] leading-tight"

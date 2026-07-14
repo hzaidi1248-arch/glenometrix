@@ -118,7 +118,7 @@ export function RiskForm({ value, onChange, onReset }: RiskFormProps) {
       {/* ── Bone Loss Measurements ─────────────────────────────────────── */}
       <fieldset className="flex flex-col gap-4">
         <legend className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] mb-2">
-          Glenoid Bone Loss (mm) — optional
+          Glenoid Bone Loss (mm) (optional)
         </legend>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <NumField
@@ -146,7 +146,7 @@ export function RiskForm({ value, onChange, onReset }: RiskFormProps) {
       {/* ── Glenoid Track ──────────────────────────────────────────────── */}
       <fieldset className="flex flex-col gap-4">
         <legend className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] mb-2">
-          Glenoid Track Assessment (mm) — optional
+          Glenoid Track Assessment (mm) (optional)
         </legend>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <NumField
@@ -169,7 +169,7 @@ export function RiskForm({ value, onChange, onReset }: RiskFormProps) {
       {/* ── Clinical Context ───────────────────────────────────────────── */}
       <fieldset className="flex flex-col gap-4">
         <legend className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] mb-2">
-          Clinical Context — optional
+          Clinical Context (optional)
         </legend>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <NumField

@@ -116,7 +116,7 @@ export function AssessmentUpload() {
       <div className="max-w-xl mx-auto flex flex-col items-center gap-6 py-16">
         <Loader2 size={32} className="text-[#1a5fae] animate-spin" />
         <p className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-wider">
-          Analyzing imaging — Phase 0 simulation
+          Analyzing imaging. Phase 0 simulation.
         </p>
       </div>
     );
