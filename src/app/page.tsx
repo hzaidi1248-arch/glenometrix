@@ -1,6 +1,7 @@
 import { HeroSection } from "@/components/sections/HeroSection";
 import { TrustStrip } from "@/components/sections/TrustStrip";
 import { ProblemSection } from "@/components/sections/ProblemSection";
+import { ScienceSection } from "@/components/sections/ScienceSection";
 import { MetricSection } from "@/components/sections/MetricSection";
 import { UploadSection } from "@/components/sections/UploadSection";
 import { OutputPreview } from "@/components/sections/OutputPreview";
@@ -17,6 +18,7 @@ export default function LandingPage() {
       <HeroSection />
       <TrustStrip />
       <ProblemSection />
+      <ScienceSection />
       <MetricSection />
       <OutputPreview />
       <UploadSection />

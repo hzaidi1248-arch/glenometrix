@@ -6,7 +6,7 @@ const { problem } = siteConfig;
 export function ProblemSection() {
   return (
     <section
-      id="science"
+      id="problem"
       className="bg-[#0a0e1a] text-white py-24 px-4 sm:px-6 lg:px-8"
       aria-labelledby="problem-heading"
     >

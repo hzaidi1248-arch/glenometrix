@@ -19,7 +19,7 @@ export const siteConfig = {
     links: [
       { label: "How It Works", href: "/#how" },
       { label: "The Science", href: "/#science" },
-      { label: "Calculator", href: "/dashboard/calculator" },
+      { label: "Try Calculator", href: "/dashboard/calculator" },
     ],
     cta: { label: "Request Access", href: "/#access" },
   },
@@ -64,6 +64,44 @@ export const siteConfig = {
         source: "Khan et al., McMaster University 2026",
       },
     ],
+  },
+
+  // Validation study results — Khan et al., McMaster University 2026 (in submission)
+  science: {
+    label: "The Science",
+    headline: "Validated against five expert clinicians.",
+    body: "GlenometriX was developed on 90 annotated 3D-CT scans and validated on a separate cohort of 121 scans against five blinded, fellowship-trained experts — three MSK radiologists and two orthopaedic surgeons.",
+    stats: [
+      {
+        value: "ICC 1.00",
+        label: "Perfect intra-rater reproducibility — a deterministic algorithm returns identical repeat measurements",
+      },
+      {
+        value: "ICC 0.87",
+        label: "Inter-rater agreement with the combined expert average",
+        note: "95% CI 0.82–0.91",
+      },
+      {
+        value: "88%",
+        label: "Concordance across minimal, subcritical, and critical bone loss categories",
+      },
+      {
+        value: "−0.17%",
+        label: "Near-zero mean bias vs. the expert average on Bland–Altman analysis",
+      },
+      {
+        value: "121",
+        label: "3D-CT scans in the independent validation cohort, separate from training data",
+      },
+      {
+        value: "5",
+        label: "Blinded expert raters — 3 MSK radiologists and 2 orthopaedic surgeons",
+      },
+    ],
+    method:
+      "A U-Net convolutional neural network segments the glenoid and applies a best-fit circle to the affected side alone — no contralateral scan required.",
+    citation:
+      "Khan et al. “GlenometriX: A Reliable Tool for Quantifying Glenoid Bone Loss.” McMaster University, 2026 — manuscript in submission.",
   },
 
   metric: {
@@ -173,8 +211,8 @@ export const siteConfig = {
   ],
 
   research: {
-    headline: "Powered by Research.",
-    body: "Summarized ACE-level evidence from OrthoEvidence, curated for shoulder instability and glenoid bone loss.",
+    headline: "Clinical Evidence Library.",
+    body: "Summarized ACE-level literature from OrthoEvidence to inform treatment decisions in shoulder instability and glenoid bone loss — distinct from the GlenometriX validation study.",
     // TODO: Replace with live OrthoEvidence API feed when access is confirmed
     mockReports: [
       {
