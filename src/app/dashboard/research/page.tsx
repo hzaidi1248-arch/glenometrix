@@ -21,9 +21,6 @@ export default function ResearchPage() {
         <p className="font-sans text-[#9ca3af] text-sm leading-relaxed max-w-2xl">
           {research.body}
         </p>
-        <p className="font-mono text-[9px] text-[#c4c4c2] uppercase tracking-wider mt-3">
-          Live OrthoEvidence feed pending API access. Displaying curated reference reports.
-        </p>
       </div>
 
       <div className="flex flex-col gap-3">

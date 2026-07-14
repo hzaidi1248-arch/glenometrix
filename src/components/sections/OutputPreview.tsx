@@ -38,9 +38,6 @@ export function OutputPreview() {
               <span className="font-mono text-[9px] text-[#9ca3af] uppercase tracking-[0.22em]">
                 Glenometrix Analysis Report
               </span>
-              <span className="font-mono text-[9px] text-[#c4c4c2] uppercase tracking-wider">
-                v0.1-alpha
-              </span>
             </div>
             <span className="font-mono text-[9px] text-[#c4c4c2] uppercase tracking-[0.22em]">
               Research Use Only

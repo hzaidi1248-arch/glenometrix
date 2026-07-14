@@ -131,7 +131,7 @@ export const siteConfig = {
     headline: "Upload Imaging. Receive Your Score.",
     body: "Research use only. Upload de-identified CT imaging to generate a Glenometrix score. Do not include any patient-identifying information.",
     phase0Notice:
-      "Live AI analysis is coming soon. Join the waitlist to be notified when automated scoring goes live.",
+      "CT scan processing is not active in this phase. Upload interactions are simulated for demonstration purposes.",
     phiWarning:
       "Do not upload images containing patient-identifiable information (name, DOB, MRN, accession number). This tool is for research purposes only and is not a clinical diagnostic device.",
     dropzoneText: "Drop de-identified CT imaging here",
@@ -153,7 +153,6 @@ export const siteConfig = {
     isisScore: "7",
     trackStatus: "Off-Track",
     riskCategory: "High Risk",
-    // TODO: Replace with Moin's example decision statement
     decisionPathway:
       "Bone block procedure indicated (Latarjet or Eden-Hybinette). Arthroscopic repair contraindicated at this bone loss level.",
   },
@@ -213,7 +212,6 @@ export const siteConfig = {
   research: {
     headline: "Clinical Evidence Library.",
     body: "Summarized ACE-level literature from OrthoEvidence to inform treatment decisions in shoulder instability and glenoid bone loss. Separate from the GlenometriX validation study.",
-    // TODO: Replace with live OrthoEvidence API feed when access is confirmed
     mockReports: [
       {
         id: "1",
