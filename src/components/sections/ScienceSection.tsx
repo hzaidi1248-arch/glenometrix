@@ -42,34 +42,36 @@ export function ScienceSection() {
           </div>
         </div>
 
-        {/* Results grid — open, structure through rules */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-[#e5e5e3] mt-12">
-          {science.stats.map((stat, i) => (
-            <div
-              key={stat.value}
-              className="flex flex-col gap-3 py-8 sm:px-8 sm:first:pl-0 border-b border-[#e5e5e3] sm:[&:not(:nth-child(3n+1))]:border-l sm:[&:not(:nth-child(3n+1))]:border-[#e5e5e3]"
-            >
-              <div className="flex items-baseline gap-2 flex-wrap">
-                <span
-                  className="font-mono font-bold text-[#0a0e1a] leading-none tabular-nums"
-                  style={{ fontSize: "clamp(2.25rem, 4.5vw, 3.25rem)", letterSpacing: "-0.05em" }}
-                >
-                  {stat.value}
-                </span>
-                {"note" in stat && stat.note && (
-                  <span className="font-mono text-[10px] text-[#9ca3af] tracking-wide">
-                    {stat.note}
+        {/* Results grid — gap-px creates 1px rules at every breakpoint correctly */}
+        <div className="mt-12 border-t border-[#e5e5e3]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#e5e5e3]">
+            {science.stats.map((stat) => (
+              <div
+                key={stat.value}
+                className="bg-[#fdfcfc] flex flex-col gap-3 py-8 px-8"
+              >
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <span
+                    className="font-mono font-bold text-[#0a0e1a] leading-none tabular-nums"
+                    style={{ fontSize: "clamp(2.25rem, 4.5vw, 3.25rem)", letterSpacing: "-0.05em" }}
+                  >
+                    {stat.value}
                   </span>
-                )}
+                  {"note" in stat && stat.note && (
+                    <span className="font-mono text-[10px] text-[#9ca3af] tracking-wide">
+                      {stat.note}
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div className="w-8 h-px bg-[#1a5fae]" />
+                  <span className="font-sans text-[#64748b] text-sm leading-snug max-w-xs">
+                    {stat.label}
+                  </span>
+                </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <div className="w-8 h-px bg-[#1a5fae]" />
-                <span className="font-sans text-[#64748b] text-sm leading-snug max-w-xs">
-                  {stat.label}
-                </span>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Method + citation */}

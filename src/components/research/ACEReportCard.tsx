@@ -1,4 +1,5 @@
 import { ExternalLink } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ACEReportCardProps {
   id: string;
@@ -28,11 +29,10 @@ export function ACEReportCard({
       <div className="flex items-start justify-between gap-3 flex-wrap">
         {/* Grade — left border accent (no pill, no badge) */}
         <span
-          className={`font-mono text-[10px] uppercase tracking-[0.2em] border-l-[1.5px] pl-2.5 flex-shrink-0 leading-none py-0.5 ${
-            isGrade1
-              ? "text-[#1a5fae] border-[#1a5fae]"
-              : "text-[#9ca3af] border-[#d1d5db]"
-          }`}
+          className={cn(
+            "font-mono text-[10px] uppercase tracking-[0.2em] border-l-[1.5px] pl-2.5 flex-shrink-0 leading-none py-0.5",
+            isGrade1 ? "text-[#1a5fae] border-[#1a5fae]" : "text-[#9ca3af] border-[#d1d5db]"
+          )}
         >
           {grade}
         </span>

@@ -36,7 +36,7 @@ export function Footer() {
                 Research
               </p>
               {[
-                { label: "AI CT Analysis", href: "/#upload" },
+                { label: "CT Bone Loss Analysis", href: "/#upload" },
                 { label: "Request Access", href: "/#access" },
                 { label: "Dashboard", href: "/dashboard" },
               ].map((link) => (

@@ -193,9 +193,8 @@ export function ScoreDisplay({
           ISIS: Balg &amp; Boileau, JBJS 2007
           {hasTrack && " · Track: Di Giacomo, Arthroscopy 2014"}
           {hasBoneLoss && " · Bone loss: best-fit circle method"}
-          {" · "}
           {input.priorDislocationCount > 0 &&
-            `${input.priorDislocationCount} prior event${input.priorDislocationCount > 1 ? "s" : ""}`}
+            ` · ${input.priorDislocationCount} prior event${input.priorDislocationCount > 1 ? "s" : ""}`}
         </p>
       </div>
     </div>
