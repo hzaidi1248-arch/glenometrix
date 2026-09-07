@@ -37,7 +37,7 @@ export function Footer() {
               </p>
               {[
                 { label: "CT Bone Loss Analysis", href: "/#upload" },
-                { label: "Request Access", href: "/#access" },
+                { label: "Join Mailing List", href: "/#access" },
                 { label: "Dashboard", href: "/dashboard" },
               ].map((link) => (
                 <Link

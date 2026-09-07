@@ -6,8 +6,8 @@
 
 /** Inputs required for the full Glenometrix assessment. */
 export interface ClinicalInput {
-  // ─── ISIS Score fields (Balg & Boileau, JBJS 2007) ─────────────────────────
-  /** Age at first dislocation in years. <20 = 2 pts, ≥20 = 0 pts */
+  // ─── Scoring fields ─────────────────────────────────────────────────────────
+  /** Age at first dislocation in years. <20 = 2 pts, 20–30 = 1 pt, >30 = 0 pts */
   ageAtFirstDislocation: number;
   /** Competitive-level sport participation. 2 pts if true */
   competitiveSport: boolean;
@@ -15,25 +15,14 @@ export interface ClinicalInput {
   contactOrOverheadSport: boolean;
   /** Anterior shoulder or GHIS hyperlaxity present. 1 pt if true */
   anteriorHyperlaxity: boolean;
-  /** Hill-Sachs lesion visible on AP X-ray in external rotation. 2 pts if true */
-  hillSachsOnApXray: boolean;
-  /** Loss of inferior glenoid contour on AP X-ray. 2 pts if true */
-  glenoidBoneLossOnApXray: boolean;
 
-  // ─── Bone loss quantification ───────────────────────────────────────────────
-  /** Width of contralateral (reference) glenoid in mm */
-  glenoidWidth: number;
-  /** Width of bone defect on affected glenoid in mm */
-  defectWidth: number;
+  // ─── Bone loss (direct %) ───────────────────────────────────────────────────
+  /** Glenoid bone loss percentage (0–100). <10% = 0 pts, 10–20% = 1 pt, >20% = 2 pts */
+  boneLossPercent: number;
 
-  // ─── Glenoid track / on/off-track assessment (Di Giacomo, Arthroscopy 2014) ─
-  /** Width of Hill-Sachs lesion in mm */
-  hillSachsWidth: number;
-  /**
-   * Distance from the medial edge of the Hill-Sachs lesion
-   * to the medial rotator cuff footprint in mm (HSL offset).
-   */
-  hslToRotatorCuffOffset: number;
+  // ─── Hill-Sachs track status ────────────────────────────────────────────────
+  /** Hill-Sachs on-track / off-track classification. on-track = 0 pts, off-track = 2 pts */
+  hillSachsTrackStatus: "on-track" | "off-track";
 
   // ─── Contextual fields ──────────────────────────────────────────────────────
   /** Total prior dislocation count (including first event) */
@@ -42,9 +31,9 @@ export interface ClinicalInput {
   sex: "male" | "female" | "other";
 }
 
-/** Point-by-point ISIS score breakdown. */
+/** Point-by-point score breakdown. */
 export interface ISISResult {
-  /** 0 or 2 — based on ageAtFirstDislocation */
+  /** 0, 1, or 2 — based on ageAtFirstDislocation (<20 = 2, 20–30 = 1, >30 = 0) */
   agePoints: number;
   /** 0 or 2 — based on competitiveSport */
   sportLevelPoints: number;
@@ -52,24 +41,24 @@ export interface ISISResult {
   sportTypePoints: number;
   /** 0 or 1 — based on anteriorHyperlaxity */
   hyperlaxityPoints: number;
-  /** 0 or 2 — based on hillSachsOnApXray */
-  hillSachsPoints: number;
-  /** 0 or 2 — based on glenoidBoneLossOnApXray */
-  glenoidLossPoints: number;
+  /** 0, 1, or 2 — based on boneLossPercent (<10% = 0, 10–20% = 1, >20% = 2) */
+  boneLossPoints: number;
+  /** 0 or 2 — based on hillSachsTrackStatus (on-track = 0, off-track = 2) */
+  trackPoints: number;
   /** Sum 0–10 */
   total: number;
 }
 
-/** Four-tier risk classification for decision support. */
-export type RiskCategory = "low" | "moderate" | "high" | "critical";
+/** Three-tier risk classification for decision support. */
+export type RiskCategory = "low" | "medium" | "high";
 
 /** Consolidated output from all Glenometrix computations. */
 export interface RiskScore {
-  /** Full ISIS score breakdown */
+  /** Full score breakdown */
   isis: ISISResult;
-  /** Calculated bone loss as a percentage of total glenoid width (0–100) */
+  /** Glenoid bone loss as a percentage (0–100) */
   boneLossPercent: number;
-  /** Glenoid track classification */
+  /** Hill-Sachs track classification */
   trackStatus: "on-track" | "off-track";
   /** Overall risk tier */
   riskCategory: RiskCategory;

@@ -64,7 +64,7 @@ function ClinicalReadoutCard() {
         </div>
         <div className="px-5 py-6">
           <div className="font-mono text-[9px] text-[#6b7280] uppercase tracking-[0.22em] mb-3">
-            ISIS Score
+            Risk Score
           </div>
           <div
             className="font-mono text-white font-bold leading-none"
@@ -73,7 +73,7 @@ function ClinicalReadoutCard() {
             7<span className="text-[#4b5563] text-lg font-normal">/10</span>
           </div>
           <div className="font-mono text-[9px] text-[#4b5563] mt-2.5 uppercase tracking-wider">
-            Threshold ≥ 7
+            ≥ 7 High Risk
           </div>
         </div>
       </div>
@@ -97,25 +97,25 @@ function ClinicalReadoutCard() {
         </span>
       </div>
 
-      {/* Glenoid track measurement bar */}
+      {/* Scoring factors summary */}
       <div className="px-5 py-5 border-b border-white/[0.07]">
         <div className="flex items-center justify-between mb-3">
           <span className="font-mono text-[9px] text-[#6b7280] uppercase tracking-[0.22em]">
-            Glenoid Track
+            Scoring Factors
           </span>
-          <span className="font-mono text-[9px] text-white/60">21.4mm / 24.8mm</span>
         </div>
-        <div className="relative h-1.5 bg-white/[0.07] overflow-visible rounded-none">
-          <div className="absolute inset-y-0 left-0 bg-[#1a5fae]" style={{ width: "86%" }} />
-          {/* Hill-Sachs interval marker */}
-          <div
-            className="absolute top-1/2 -translate-y-1/2 w-[1.5px] h-4 bg-[#ef4444]"
-            style={{ left: "74%" }}
-          />
-        </div>
-        <div className="flex justify-between mt-2">
-          <span className="font-mono text-[8px] text-[#4b5563] uppercase tracking-wider">Track</span>
-          <span className="font-mono text-[8px] text-[#ef4444] uppercase tracking-wider">HSI</span>
+        <div className="flex flex-col gap-1.5">
+          {[
+            { label: "GBL 18.4%", pts: "1" },
+            { label: "Off-track", pts: "2" },
+            { label: "Age < 20", pts: "2" },
+            { label: "Competitive sport", pts: "2" },
+          ].map((f) => (
+            <div key={f.label} className="flex items-center justify-between">
+              <span className="font-mono text-[9px] text-[#6b7280]">{f.label}</span>
+              <span className="font-mono text-[9px] text-[#1a5fae] font-semibold">+{f.pts}</span>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -123,10 +123,10 @@ function ClinicalReadoutCard() {
       <div className="px-5 py-5">
         <div className="border-l-2 border-[#1a5fae] pl-4">
           <div className="font-mono text-[9px] text-[#6b7280] uppercase tracking-[0.22em] mb-2">
-            Decision
+            Recommendation
           </div>
           <p className="font-sans text-white/75 text-[12px] leading-relaxed">
-            Bone block procedure indicated. Latarjet or Eden-Hybinette recommended.
+            Consider bony augmentation. High risk of failure with Bankart repair.
           </p>
         </div>
       </div>

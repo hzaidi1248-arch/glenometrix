@@ -19,9 +19,9 @@ export const siteConfig = {
     links: [
       { label: "How It Works", href: "/#how" },
       { label: "The Science", href: "/#science" },
-      { label: "Try Calculator", href: "/dashboard/calculator" },
+      { label: "Use The Tool", href: "/dashboard/assessment" },
     ],
-    cta: { label: "Request Access", href: "/#access" },
+    cta: { label: "Join Mailing List", href: "/#access" },
   },
 
   trustStrip: {
@@ -40,8 +40,8 @@ export const siteConfig = {
     headlineAccent: "Estimate.",
     subhead:
       "Glenometrix measures glenoid bone loss from 3D CT scans with ICC 0.87 agreement against expert clinicians. The objective measurement every shoulder instability case requires.",
-    cta: { label: "Try the Calculator", href: "/dashboard/calculator" },
-    ctaSecondary: { label: "Request Access", href: "#access" },
+    cta: { label: "Use The Tool", href: "/dashboard/assessment" },
+    ctaSecondary: { label: "Join Mailing List", href: "#access" },
   },
 
   problem: {
@@ -144,7 +144,7 @@ export const siteConfig = {
       "GlenometriX quantifies glenoid bone loss directly from a 3D CT scan using a validated AI model (ICC 0.87 agreement with expert clinicians). Full analysis is currently limited to research partners.",
     landingNotice:
       "AI CT analysis is rolling out to research partners. Request access to enable it at your institution.",
-    landingCta: "Request Access",
+    landingCta: "Join Mailing List",
   },
 
   outputPreview: {
@@ -158,11 +158,11 @@ export const siteConfig = {
   },
 
   access: {
-    headline: "Join the Research Pilot.",
-    body: "Apply for early access. Open to orthopedic surgeons, sports medicine physicians, and shoulder researchers. Limited spots available.",
+    headline: "Join Mailing List",
+    body: "Sign up to stay updated on Glenometrix developments. Open to orthopedic surgeons, sports medicine physicians, and shoulder researchers.",
     successMessage:
-      "You're on the list. We'll reach out when access opens in your region.",
-    buttonLabel: "Apply for Access",
+      "You're on the list. We'll keep you updated on Glenometrix developments.",
+    buttonLabel: "Join Mailing List",
     emailPlaceholder: "your@institution.edu",
     institutionPlaceholder: "Hospital or research institution (optional)",
   },

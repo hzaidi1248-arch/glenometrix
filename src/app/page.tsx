@@ -18,8 +18,8 @@ export default function LandingPage() {
       <HeroSection />
       <TrustStrip />
       <ProblemSection />
-      <ScienceSection />
       <MetricSection />
+      <ScienceSection />
       <OutputPreview />
       <UploadSection />
       <EarlyAccessSection />

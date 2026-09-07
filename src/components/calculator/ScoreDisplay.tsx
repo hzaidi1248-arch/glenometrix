@@ -1,52 +1,55 @@
 import { cn } from "@/lib/utils";
 import { interpretBoneLoss } from "@/lib/clinical";
 import type { IsisRecommendation } from "@/lib/clinical";
-import type { ClinicalInput, ISISResult } from "@/lib/clinical/types";
-import type { TrackResult } from "@/lib/clinical/measurement";
+import type { ClinicalInput, ISISResult, RiskCategory } from "@/lib/clinical/types";
 import { ISISBreakdown } from "./ISISBreakdown";
 
 interface ScoreDisplayProps {
   input: ClinicalInput;
   isis: ISISResult;
   recommendation: IsisRecommendation;
-  /** Bone loss %, only meaningful when glenoid width has been entered */
-  boneLossPercent: number;
-  hasBoneLoss: boolean;
-  /** Track result, only meaningful when all track inputs have been entered */
-  track: TrackResult;
-  hasTrack: boolean;
+  riskCategory: RiskCategory;
+  isOverride: boolean;
 }
 
 const REC_STYLES: Record<
   IsisRecommendation["procedure"],
-  { border: string; dot: string; text: string; tag: string }
+  { border: string; dot: string; text: string }
 > = {
   bankart: {
     border: "border-[#16a34a]",
     dot: "bg-[#16a34a]",
     text: "text-[#16a34a]",
-    tag: "Low ISIS",
   },
-  latarjet: {
+  "bankart-remplissage": {
     border: "border-[#d97706]",
     dot: "bg-[#d97706]",
     text: "text-[#b45309]",
-    tag: "High ISIS",
   },
+  "bony-augmentation": {
+    border: "border-[#dc2626]",
+    dot: "bg-[#dc2626]",
+    text: "text-[#dc2626]",
+  },
+};
+
+const RISK_STYLES: Record<RiskCategory, { badge: string; text: string; bg: string }> = {
+  low: { badge: "bg-[#16a34a]/10 text-[#16a34a]", text: "text-[#16a34a]", bg: "bg-[#16a34a]" },
+  medium: { badge: "bg-[#d97706]/10 text-[#b45309]", text: "text-[#b45309]", bg: "bg-[#d97706]" },
+  high: { badge: "bg-[#dc2626]/10 text-[#dc2626]", text: "text-[#dc2626]", bg: "bg-[#dc2626]" },
 };
 
 export function ScoreDisplay({
   input,
   isis,
   recommendation,
-  boneLossPercent,
-  hasBoneLoss,
-  track,
-  hasTrack,
+  riskCategory,
+  isOverride,
 }: ScoreDisplayProps) {
   const rec = REC_STYLES[recommendation.procedure];
+  const risk = RISK_STYLES[riskCategory];
   const scorePct = (isis.total / 10) * 100;
-  const boneLoss = interpretBoneLoss(boneLossPercent);
+  const boneLoss = interpretBoneLoss(input.boneLossPercent);
 
   return (
     <div
@@ -55,9 +58,14 @@ export function ScoreDisplay({
     >
       {/* Header */}
       <div className="flex items-center justify-between gap-4 px-6 py-3 border-b border-[#ebebea] bg-[#fafaf9]">
-        <span className="font-mono text-[9px] text-[#9ca3af] uppercase tracking-[0.22em]">
-          Live ISIS Score
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="font-mono text-[9px] text-[#9ca3af] uppercase tracking-[0.22em]">
+            Live Score
+          </span>
+          <span className={cn("font-mono text-[9px] uppercase tracking-[0.1em] px-1.5 py-0.5 rounded", risk.badge)}>
+            {riskCategory} Risk
+          </span>
+        </div>
         <span className="font-mono text-[9px] text-[#c4c4c2] uppercase tracking-[0.22em]">
           Research Use Only
         </span>
@@ -85,12 +93,19 @@ export function ScoreDisplay({
           </div>
         </div>
 
-        {/* Progress bar with Latarjet threshold marker at 7/10 */}
+        {/* Progress bar */}
         <div className="relative h-1.5 bg-[#ebebea]">
           <div
-            className={cn("h-full transition-all duration-300", rec.dot)}
+            className={cn("h-full transition-all duration-300", risk.bg)}
             style={{ width: `${scorePct}%` }}
           />
+          {/* Marker 40% */}
+          <div
+            className="absolute top-1/2 -translate-y-1/2 w-px h-3.5 bg-[#0a0e1a]"
+            style={{ left: "40%" }}
+            aria-hidden="true"
+          />
+          {/* Marker 70% */}
           <div
             className="absolute top-1/2 -translate-y-1/2 w-px h-3.5 bg-[#0a0e1a]"
             style={{ left: "70%" }}
@@ -101,11 +116,27 @@ export function ScoreDisplay({
           <span className="font-mono text-[8px] text-[#c4c4c2] uppercase tracking-wider">
             0
           </span>
-          <span className="font-mono text-[8px] text-[#0a0e1a] uppercase tracking-wider">
-            ≥ 7 Latarjet threshold
-          </span>
+          <div className="flex gap-4">
+            <span className="font-mono text-[8px] text-[#0a0e1a] uppercase tracking-wider">
+              ≥ 4 medium
+            </span>
+            <span className="font-mono text-[8px] text-[#0a0e1a] uppercase tracking-wider">
+              ≥ 7 high risk
+            </span>
+          </div>
         </div>
       </div>
+
+      {isOverride && (
+        <div className="px-6 pb-4">
+          <div className="bg-[#fef2f2] border border-[#f87171] p-3 rounded flex gap-2 items-start">
+            <span className="text-[#dc2626]">⚠</span>
+            <span className="text-sm text-[#b91c1c] font-sans font-medium">
+              GBL &gt; 20% + off-track Hill-Sachs: automatically classified as high risk
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* Recommendation */}
       <div className="px-6 pb-6">
@@ -125,15 +156,15 @@ export function ScoreDisplay({
         </div>
       </div>
 
-      {/* Bone loss — only when entered */}
-      {hasBoneLoss && (
-        <div className="px-6 py-5 border-t border-[#ebebea] flex flex-col gap-2">
+      {/* Status section (Bone Loss and Track) */}
+      <div className="px-6 py-5 border-t border-[#ebebea] flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
           <div className="flex items-baseline justify-between gap-3">
             <span className="font-mono text-[9px] text-[#9ca3af] uppercase tracking-[0.2em]">
               Glenoid Bone Loss
             </span>
             <span className="font-mono font-semibold text-[#0a0e1a] text-lg tabular-nums">
-              {boneLossPercent.toFixed(1)}%
+              {input.boneLossPercent.toFixed(1)}%
             </span>
           </div>
           <p className="font-sans text-[#64748b] text-xs leading-relaxed">
@@ -141,48 +172,34 @@ export function ScoreDisplay({
             {boneLoss.note}
           </p>
         </div>
-      )}
 
-      {/* Glenoid track — only when entered */}
-      {hasTrack && (
-        <div className="px-6 py-5 border-t border-[#ebebea] flex flex-col gap-2">
-          <div className="flex items-center justify-between gap-3">
-            <span className="font-mono text-[9px] text-[#9ca3af] uppercase tracking-[0.2em]">
-              Glenoid Track
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <span
-                className={cn(
-                  "w-2 h-2 flex-shrink-0",
-                  track.status === "off-track" ? "bg-[#d97706]" : "bg-[#16a34a]"
-                )}
-              />
-              <span
-                className={cn(
-                  "font-mono text-[10px] uppercase tracking-[0.16em]",
-                  track.status === "off-track" ? "text-[#b45309]" : "text-[#16a34a]"
-                )}
-              >
-                {track.status === "off-track" ? "Off-Track" : "On-Track"}
-              </span>
-            </span>
-          </div>
-          <div className="flex items-center gap-4 font-mono text-[10px] text-[#64748b] tabular-nums">
-            <span>GT {track.glenoidTrack}mm</span>
-            <span>HST {track.hillSachsTrack}mm</span>
+        <div className="flex items-center justify-between gap-3 pt-4 border-t border-[#ebebea]/50">
+          <span className="font-mono text-[9px] text-[#9ca3af] uppercase tracking-[0.2em]">
+            Glenoid Track
+          </span>
+          <span className="inline-flex items-center gap-2">
             <span
-              className={track.marginMm < 0 ? "text-[#b45309]" : "text-[#16a34a]"}
+              className={cn(
+                "w-2 h-2 flex-shrink-0",
+                input.hillSachsTrackStatus === "off-track" ? "bg-[#d97706]" : "bg-[#16a34a]"
+              )}
+            />
+            <span
+              className={cn(
+                "font-mono text-[10px] uppercase tracking-[0.16em]",
+                input.hillSachsTrackStatus === "off-track" ? "text-[#b45309]" : "text-[#16a34a]"
+              )}
             >
-              margin {track.marginMm}mm
+              {input.hillSachsTrackStatus === "off-track" ? "Off-Track" : "On-Track"}
             </span>
-          </div>
+          </span>
         </div>
-      )}
+      </div>
 
       {/* ISIS breakdown */}
       <div className="px-6 py-5 border-t border-[#ebebea]">
         <p className="font-mono text-[9px] text-[#9ca3af] uppercase tracking-[0.2em] mb-3">
-          ISIS Score Breakdown
+          Score Breakdown
         </p>
         <ISISBreakdown result={isis} />
       </div>
@@ -191,8 +208,6 @@ export function ScoreDisplay({
       <div className="px-6 py-3 border-t border-[#ebebea] bg-[#fafaf9]">
         <p className="font-mono text-[9px] text-[#c4c4c2] uppercase tracking-wider leading-relaxed">
           ISIS: Balg &amp; Boileau, JBJS 2007
-          {hasTrack && " · Track: Di Giacomo, Arthroscopy 2014"}
-          {hasBoneLoss && " · Bone loss: best-fit circle method"}
           {input.priorDislocationCount > 0 &&
             ` · ${input.priorDislocationCount} prior event${input.priorDislocationCount > 1 ? "s" : ""}`}
         </p>

@@ -7,24 +7,24 @@
  * The bone loss % is calculated as defect width / contralateral glenoid width × 100.
  */
 
-import type { ClinicalInput } from "./types";
-
 /**
  * Calculate bone loss as a percentage of total glenoid width.
+ * @param glenoidWidth Width of contralateral (reference) glenoid in mm
+ * @param defectWidth Width of bone defect on affected glenoid in mm
  * @returns number between 0 and 100 (clamped), rounded to 1 decimal place.
  */
-export function computeBoneLossPercent(input: ClinicalInput): number {
-  if (input.glenoidWidth <= 0) return 0;
-  const raw = (input.defectWidth / input.glenoidWidth) * 100;
+export function computeBoneLossPercent(glenoidWidth: number, defectWidth: number): number {
+  if (glenoidWidth <= 0) return 0;
+  const raw = (defectWidth / glenoidWidth) * 100;
   return Math.round(Math.min(Math.max(raw, 0), 100) * 10) / 10;
 }
 
 /**
  * Interpret bone loss percentage into clinical significance tiers.
- * Thresholds per Burkhart & De Beer (2000) and subsequent literature.
+ * Thresholds: < 10% minimal, 10–20% subcritical, > 20% critical.
  */
 export function interpretBoneLoss(boneLossPercent: number): {
-  tier: "minimal" | "moderate" | "significant" | "critical";
+  tier: "minimal" | "subcritical" | "critical";
   label: string;
   note: string;
 } {
@@ -35,23 +35,16 @@ export function interpretBoneLoss(boneLossPercent: number): {
       note: "Soft-tissue repair feasible; bone loss unlikely to drive recurrence.",
     };
   }
-  if (boneLossPercent < 13.5) {
+  if (boneLossPercent <= 20) {
     return {
-      tier: "moderate",
-      label: "Moderate (10–13.5%)",
-      note: "Approaching the critical zone; assess glenoid track status.",
-    };
-  }
-  if (boneLossPercent < 20) {
-    return {
-      tier: "significant",
-      label: "Significant (13.5–20%)",
-      note: "Glenoid track often compromised; consider bone block procedure.",
+      tier: "subcritical",
+      label: "Subcritical (10–20%)",
+      note: "Approaching the critical zone; consider remplissage or bony augmentation.",
     };
   }
   return {
     tier: "critical",
-    label: "Critical (≥ 20%)",
-    note: "Bone block procedure required (Latarjet or Eden-Hybinette). Isolated soft-tissue repair contraindicated.",
+    label: "Critical (> 20%)",
+    note: "Consider bony augmentation. High risk of failure with isolated soft-tissue repair.",
   };
 }

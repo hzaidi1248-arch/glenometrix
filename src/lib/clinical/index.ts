@@ -22,9 +22,6 @@ export type { IsisRecommendation } from "./risk-scoring";
 
 export { computeBoneLossPercent, interpretBoneLoss } from "./bone-loss";
 
-export { computeTrackStatus } from "./measurement";
-export type { TrackResult } from "./measurement";
-
 export { getDecisionPathway, getDecisionSummary } from "./clinical-decision";
 
 export { validateClinicalInput } from "./validators";

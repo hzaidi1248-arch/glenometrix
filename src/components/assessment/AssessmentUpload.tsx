@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PHIModal } from "@/components/shared/PHIModal";
 import { siteConfig } from "@/config/site";
+import Link from "next/link";
 
 type UploadState = "idle" | "confirmed" | "loading" | "done";
 
@@ -56,57 +57,31 @@ export function AssessmentUpload() {
           className="bg-white flex flex-col gap-6 p-8"
           style={{ boxShadow: "inset 0 0 0 0.5px rgba(0,0,0,0.08)" }}
         >
-          <div className="grid grid-cols-2 gap-6 border-b border-[#ebebea] pb-6">
-            <div className="flex flex-col gap-1">
-              <span className="font-mono text-[9px] text-[#9ca3af] uppercase tracking-[0.2em]">
-                Bone Loss
-              </span>
-              <span className="score-value text-[#0a0e1a]">
-                {outputPreview.boneLossPercent}%
-              </span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <span className="font-mono text-[9px] text-[#9ca3af] uppercase tracking-[0.2em]">
-                ISIS Score
-              </span>
-              <span className="score-value text-[#0a0e1a]">
-                {outputPreview.isisScore}
-                <span className="text-[#c4c4c2] text-base font-sans font-normal ml-1">/10</span>
-              </span>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-6">
-            <span className="inline-flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-[#dc2626] flex-shrink-0" />
-              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#dc2626]">
-                {outputPreview.riskCategory}
-              </span>
+          <div className="flex flex-col gap-1">
+            <span className="font-mono text-[9px] text-[#9ca3af] uppercase tracking-[0.2em]">
+              Bone Loss
             </span>
-            <span className="inline-flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-amber-400 flex-shrink-0" />
-              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-600">
-                {outputPreview.trackStatus}
-              </span>
+            <span className="score-value text-[#0a0e1a]">
+              {outputPreview.boneLossPercent}%
             </span>
-          </div>
-
-          <div className="border-l border-[#1a5fae] pl-4 flex flex-col gap-1">
-            <p className="font-mono text-[9px] text-[#9ca3af] uppercase tracking-[0.2em] mb-1">
-              Decision Pathway
-            </p>
-            <p className="font-sans text-[#0a0e1a] text-sm leading-relaxed italic">
-              {outputPreview.decisionPathway}
-            </p>
           </div>
         </div>
 
-        <button
-          onClick={handleReset}
-          className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] hover:text-[#0a0e1a] transition-colors w-fit"
-        >
-          Upload another scan
-        </button>
+        <div className="flex flex-col gap-4 mt-2">
+          <Link
+            href={`/dashboard/calculator?boneLoss=${outputPreview.boneLossPercent}`}
+            className="flex items-center justify-center bg-[#1a5fae] text-white px-6 py-3 font-sans font-medium text-sm transition-colors hover:bg-[#134b8c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#1a5fae] w-full"
+          >
+            Proceed to Decision-Making Tool
+          </Link>
+
+          <button
+            onClick={handleReset}
+            className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] hover:text-[#0a0e1a] transition-colors w-fit"
+          >
+            Upload another scan
+          </button>
+        </div>
       </div>
     );
   }
@@ -187,6 +162,16 @@ export function AssessmentUpload() {
 
       <div className="flex items-start gap-3 text-[#64748b] text-xs font-sans leading-relaxed border-l border-amber-400 pl-3">
         <span>{upload.phiWarning}</span>
+      </div>
+
+      <div className="border-l border-[#1a5fae] pl-4 flex flex-col gap-2">
+        <p className="font-mono text-[9px] text-[#9ca3af] uppercase tracking-[0.2em]">
+          Tips to optimize accuracy
+        </p>
+        <ol className="list-decimal list-inside font-sans text-[#64748b] text-sm space-y-1">
+          <li>The image should be an en-face 3D reconstruction of the glenoid</li>
+          <li>The image should ideally be a screenshot rather than a photo taken on a phone camera</li>
+        </ol>
       </div>
 
       <p className="font-mono text-[9px] text-[#9ca3af] uppercase tracking-wider">

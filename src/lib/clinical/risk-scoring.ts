@@ -1,99 +1,139 @@
 /**
- * ISIS score computation — Balg & Boileau, JBJS 2007.
+ * Glenometrix risk scoring — adapted from Balg & Boileau ISIS (JBJS 2007).
+ * Modified scoring system with integrated bone loss % and on/off-track status.
  * Pure function — no side effects, no imports, no browser deps.
- * Reference: Balg F, Boileau P. "The instability severity index score."
- * JBJS Br. 2007;89(11):1470-1477.
+ *
+ * Maximum total: 10 points.
+ * Age (<20 = 2, 20–30 = 1, >30 = 0) + Sport level (2) + Sport type (1) +
+ * Hyperlaxity (1) + GBL% (<10% = 0, 10–20% = 1, >20% = 2) + Track (off = 2, on = 0)
  */
 
 import type { ClinicalInput, ISISResult, RiskCategory } from "./types";
 
 /**
- * Compute the ISIS score breakdown from clinical inputs.
+ * Compute the score breakdown from clinical inputs.
  * Maximum total: 10 points.
  */
 export function computeISISScore(input: ClinicalInput): ISISResult {
+  // Age: <20 = 2pts, 20–30 = 1pt, >30 = 0pts
   // Guard: an unentered age (0) must not award points during live scoring.
-  const agePoints =
-    input.ageAtFirstDislocation > 0 && input.ageAtFirstDislocation < 20 ? 2 : 0;
+  let agePoints = 0;
+  if (input.ageAtFirstDislocation > 0) {
+    if (input.ageAtFirstDislocation < 20) {
+      agePoints = 2;
+    } else if (input.ageAtFirstDislocation <= 30) {
+      agePoints = 1;
+    }
+  }
+
   const sportLevelPoints = input.competitiveSport ? 2 : 0;
   const sportTypePoints = input.contactOrOverheadSport ? 1 : 0;
   const hyperlaxityPoints = input.anteriorHyperlaxity ? 1 : 0;
-  const hillSachsPoints = input.hillSachsOnApXray ? 2 : 0;
-  const glenoidLossPoints = input.glenoidBoneLossOnApXray ? 2 : 0;
+
+  // Bone loss: <10% = 0pts, 10–20% = 1pt, >20% = 2pts
+  let boneLossPoints = 0;
+  if (input.boneLossPercent > 20) {
+    boneLossPoints = 2;
+  } else if (input.boneLossPercent >= 10) {
+    boneLossPoints = 1;
+  }
+
+  // Track: off-track = 2pts, on-track = 0pts
+  const trackPoints = input.hillSachsTrackStatus === "off-track" ? 2 : 0;
 
   const total =
     agePoints +
     sportLevelPoints +
     sportTypePoints +
     hyperlaxityPoints +
-    hillSachsPoints +
-    glenoidLossPoints;
+    boneLossPoints +
+    trackPoints;
 
   return {
     agePoints,
     sportLevelPoints,
     sportTypePoints,
     hyperlaxityPoints,
-    hillSachsPoints,
-    glenoidLossPoints,
+    boneLossPoints,
+    trackPoints,
     total,
   };
 }
 
 /**
- * Determine the overall risk category from ISIS score and bone loss percentage.
- * Bone loss ≥ 20% is independently escalated to "critical" per Burkhart criteria.
+ * Determine the overall risk category from score and clinical factors.
+ *
+ * Thresholds:
+ *   ≤ 3 → low
+ *   4–6 → medium
+ *   ≥ 7 → high
+ *
+ * Override: GBL > 20% + off-track → high regardless of score.
  */
 export function computeRiskCategory(
   isisTotal: number,
-  boneLossPercent: number
+  boneLossPercent: number,
+  trackStatus: "on-track" | "off-track" = "on-track"
 ): RiskCategory {
-  if (boneLossPercent >= 20 || isisTotal >= 10) return "critical";
-  if (isisTotal >= 7 || boneLossPercent >= 15) return "high";
-  if (isisTotal >= 4 || boneLossPercent >= 10) return "moderate";
+  // Override: >20% GBL + off-track = immediate high risk
+  if (boneLossPercent > 20 && trackStatus === "off-track") return "high";
+
+  if (isisTotal >= 7) return "high";
+  if (isisTotal >= 4) return "medium";
   return "low";
 }
 
 /**
  * Return a human-readable recurrence risk estimate string.
- * Figures derived from published Latarjet vs. Bankart literature.
  */
 export function computeRecurrenceRisk(riskCategory: RiskCategory): string {
   const map: Record<RiskCategory, string> = {
-    low: "< 10% with Bankart repair",
-    moderate: "25–40% with Bankart repair; augmentation should be considered",
-    high: "≈ 60% with isolated Bankart; bone block strongly recommended",
-    critical: "≥ 70%; bone block procedure required",
+    low: "Low risk of failure with Bankart repair",
+    medium: "Medium risk of failure with Bankart repair",
+    high: "High risk of failure with Bankart repair",
   };
   return map[riskCategory];
 }
 
-/** Surgical recommendation driven by the ISIS threshold (Balg & Boileau, 2007). */
+/** Surgical recommendation based on risk tier. */
 export interface IsisRecommendation {
-  procedure: "bankart" | "latarjet";
+  procedure: "bankart" | "bankart-remplissage" | "bony-augmentation";
   label: string;
   detail: string;
 }
 
 /**
- * Map an ISIS total to the published surgical recommendation.
- * ISIS ≤ 6  → arthroscopic Bankart repair (recurrence ≈ 10%).
- * ISIS ≥ 7  → Latarjet / open bony procedure (arthroscopic recurrence ≈ 70%).
- * Reference: Balg F, Boileau P. JBJS Br. 2007;89(11):1470-1477.
+ * Map a risk category to the recommended surgical pathway.
+ *
+ * Low (≤3):    Consider Bankart repair with possible remplissage
+ * Medium (4–6): Consider Bankart repair with remplissage, or possible bony augmentation
+ * High (≥7):   Consider bony augmentation
  */
-export function getIsisRecommendation(isisTotal: number): IsisRecommendation {
-  if (isisTotal <= 6) {
+export function getIsisRecommendation(
+  riskCategory: RiskCategory,
+  isOverride: boolean = false
+): IsisRecommendation {
+  if (riskCategory === "high") {
     return {
-      procedure: "bankart",
-      label: "Arthroscopic Bankart repair",
+      procedure: "bony-augmentation",
+      label: "Consider bony augmentation",
+      detail: isOverride
+        ? "GBL > 20% with off-track Hill-Sachs lesion: high risk of failure with Bankart repair regardless of total score. Bony augmentation is recommended."
+        : "Score ≥ 7: high risk of failure with Bankart repair. Consider bony augmentation procedure.",
+    };
+  }
+  if (riskCategory === "medium") {
+    return {
+      procedure: "bankart-remplissage",
+      label: "Bankart repair with remplissage or bony augmentation",
       detail:
-        "ISIS ≤ 6: arthroscopic soft-tissue repair is appropriate, with a published recurrence rate of approximately 10%.",
+        "Score 4–6: medium risk of failure with Bankart repair. Consider Bankart repair with remplissage, or possible bony augmentation.",
     };
   }
   return {
-    procedure: "latarjet",
-    label: "Latarjet / open bony procedure",
+    procedure: "bankart",
+    label: "Bankart repair with possible remplissage",
     detail:
-      "ISIS ≥ 7: isolated arthroscopic Bankart repair carries a recurrence rate near 70%. A bony augmentation procedure is recommended.",
+      "Score ≤ 3: low risk of failure with Bankart repair. Consider Bankart repair with possible remplissage.",
   };
 }

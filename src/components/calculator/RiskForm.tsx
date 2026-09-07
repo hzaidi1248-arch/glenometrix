@@ -23,7 +23,6 @@ interface RiskFormProps {
 /**
  * Live clinical input form — fully controlled by the parent.
  * No submit: every change flows up immediately so results update in real time
- * (matching the orthodoc ISIS calculator interaction model).
  */
 export function RiskForm({ value, onChange, onReset }: RiskFormProps) {
   function set<K extends keyof ClinicalInput>(field: K, v: ClinicalInput[K]) {
@@ -34,10 +33,14 @@ export function RiskForm({ value, onChange, onReset }: RiskFormProps) {
     set(field, (parseFloat(raw) || 0) as ClinicalInput[typeof field]);
   }
 
-  const ageEarns =
-    value.ageAtFirstDislocation > 0 && value.ageAtFirstDislocation < 20;
-  const defectExceedsGlenoid =
-    value.glenoidWidth > 0 && value.defectWidth > value.glenoidWidth;
+  const agePts =
+    value.ageAtFirstDislocation === 0 ? 0 :
+    value.ageAtFirstDislocation < 20 ? 2 :
+    value.ageAtFirstDislocation <= 30 ? 1 : 0;
+
+  const boneLossPts =
+    value.boneLossPercent > 20 ? 2 :
+    value.boneLossPercent >= 10 ? 1 : 0;
 
   return (
     <div className="flex flex-col gap-6">
@@ -61,10 +64,10 @@ export function RiskForm({ value, onChange, onReset }: RiskFormProps) {
             <span
               className={cn(
                 "font-mono text-[10px] flex-shrink-0 tabular-nums",
-                ageEarns ? "text-[#1a5fae] font-semibold" : "text-[#9ca3af]"
+                agePts > 0 ? "text-[#1a5fae] font-semibold" : "text-[#9ca3af]"
               )}
             >
-              {ageEarns ? "+2 pts" : "0 pts"}
+              +{agePts} {agePts === 1 ? "pt" : "pts"}
             </span>
           </div>
           <Input
@@ -79,7 +82,7 @@ export function RiskForm({ value, onChange, onReset }: RiskFormProps) {
             className="rounded-none font-sans text-sm focus-visible:ring-0 focus-visible:border-[#1a5fae]"
           />
           <p className="font-mono text-[9px] text-[#c4c4c2] uppercase tracking-wider">
-            &lt; 20 years scores 2 points
+            &lt; 20 = 2 pts · 20–30 = 1 pt · &gt; 30 = 0 pts
           </p>
         </div>
 
@@ -101,69 +104,51 @@ export function RiskForm({ value, onChange, onReset }: RiskFormProps) {
           value={value.anteriorHyperlaxity}
           onChange={(v) => set("anteriorHyperlaxity", v)}
         />
-        <SegField
-          label="Hill-Sachs lesion visible on AP X-ray (external rotation)"
-          hint="+2 pts"
-          value={value.hillSachsOnApXray}
-          onChange={(v) => set("hillSachsOnApXray", v)}
-        />
-        <SegField
-          label="Loss of inferior glenoid contour on AP X-ray"
-          hint="+2 pts"
-          value={value.glenoidBoneLossOnApXray}
-          onChange={(v) => set("glenoidBoneLossOnApXray", v)}
-        />
       </fieldset>
 
-      {/* ── Bone Loss Measurements ─────────────────────────────────────── */}
+      {/* ── Bone Loss & Track Status ─────────────────────────────────────── */}
       <fieldset className="flex flex-col gap-4">
         <legend className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] mb-2">
-          Glenoid Bone Loss (mm) (optional)
+          Bone Loss &amp; Track Status
         </legend>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <NumField
-            id="glenoidWidth"
-            label="Contralateral glenoid width"
-            value={value.glenoidWidth || ""}
-            onChange={(v) => setNum("glenoidWidth", v)}
-            placeholder="mm"
-          />
-          <NumField
-            id="defectWidth"
-            label="Glenoid bone defect width"
-            value={value.defectWidth || ""}
-            onChange={(v) => setNum("defectWidth", v)}
-            placeholder="mm"
-            error={
-              defectExceedsGlenoid
-                ? "Defect exceeds glenoid width."
-                : undefined
-            }
-          />
-        </div>
-      </fieldset>
 
-      {/* ── Glenoid Track ──────────────────────────────────────────────── */}
-      <fieldset className="flex flex-col gap-4">
-        <legend className="font-mono text-[10px] text-[#9ca3af] uppercase tracking-[0.2em] mb-2">
-          Glenoid Track Assessment (mm) (optional)
-        </legend>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <NumField
-            id="hillSachsWidth"
-            label="Hill-Sachs lesion width"
-            value={value.hillSachsWidth || ""}
-            onChange={(v) => setNum("hillSachsWidth", v)}
-            placeholder="mm"
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-baseline justify-between gap-2">
+            <Label htmlFor="boneLossPercent" className="font-sans text-[#0a0e1a] text-sm">
+              Glenoid bone loss (%)
+            </Label>
+            <span
+              className={cn(
+                "font-mono text-[10px] flex-shrink-0 tabular-nums",
+                boneLossPts > 0 ? "text-[#1a5fae] font-semibold" : "text-[#9ca3af]"
+              )}
+            >
+              +{boneLossPts} {boneLossPts === 1 ? "pt" : "pts"}
+            </span>
+          </div>
+          <Input
+            id="boneLossPercent"
+            type="number"
+            inputMode="decimal"
+            value={value.boneLossPercent || ""}
+            onChange={(e) => setNum("boneLossPercent", e.target.value)}
+            placeholder="%"
+            min={0}
+            max={100}
+            step="0.1"
+            className="rounded-none font-sans text-sm focus-visible:ring-0 focus-visible:border-[#1a5fae]"
           />
-          <NumField
-            id="hslOffset"
-            label="HSL medial edge to rotator cuff footprint"
-            value={value.hslToRotatorCuffOffset || ""}
-            onChange={(v) => setNum("hslToRotatorCuffOffset", v)}
-            placeholder="mm"
-          />
+          <p className="font-mono text-[9px] text-[#c4c4c2] uppercase tracking-wider">
+            &lt; 10% = 0 pts · 10–20% = 1 pt · &gt; 20% = 2 pts
+          </p>
         </div>
+
+        <SegFieldTrack
+          label="Hill-Sachs track status"
+          hint="+2 pts if off-track"
+          value={value.hillSachsTrackStatus}
+          onChange={(v) => set("hillSachsTrackStatus", v as ClinicalInput["hillSachsTrackStatus"])}
+        />
       </fieldset>
 
       {/* ── Clinical Context ───────────────────────────────────────────── */}
@@ -299,6 +284,43 @@ function SegField({
         </SegButton>
         <SegButton active={!value} onClick={() => onChange(false)}>
           No
+        </SegButton>
+      </div>
+    </div>
+  );
+}
+
+function SegFieldTrack({
+  label,
+  hint,
+  value,
+  onChange,
+}: {
+  label: string;
+  hint: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="font-sans text-sm text-[#0a0e1a] leading-snug">
+          {label}
+        </span>
+        <span className="font-mono text-[10px] text-[#1a5fae] flex-shrink-0">
+          {hint}
+        </span>
+      </div>
+      <div
+        className="grid grid-cols-2 gap-px bg-[#e5e5e3]"
+        role="group"
+        aria-label={label}
+      >
+        <SegButton active={value === "on-track"} onClick={() => onChange("on-track")}>
+          On-Track
+        </SegButton>
+        <SegButton active={value === "off-track"} onClick={() => onChange("off-track")}>
+          Off-Track
         </SegButton>
       </div>
     </div>

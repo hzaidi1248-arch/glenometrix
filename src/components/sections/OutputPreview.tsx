@@ -145,8 +145,8 @@ export function OutputPreview() {
                 {[
                   { label: "Age < 20y", pts: 2, max: 2 },
                   { label: "Competitive sport", pts: 2, max: 2 },
-                  { label: "Hill-Sachs on AP", pts: 2, max: 2 },
-                  { label: "Glenoid loss on AP", pts: 1, max: 2 },
+                  { label: "GBL > 20%", pts: 2, max: 2 },
+                  { label: "Off-track Hill-Sachs", pts: 2, max: 2 },
                 ].map((row) => (
                   <div key={row.label} className="flex items-center justify-between gap-4">
                     <span className="font-sans text-[11px] text-[#64748b] leading-none">{row.label}</span>

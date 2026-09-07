@@ -3,12 +3,14 @@
  * Method: Di Giacomo et al., Arthroscopy 2014.
  * Pure function — no side effects.
  *
+ * NOTE: This module is no longer used in the calculator flow.
+ * On/off-track status is now entered directly by the clinician.
+ * Kept for reference and potential future use in the assessment pipeline.
+ *
  * Reference: Di Giacomo G, et al. "Evolving concept of bipolar bone loss and
  * the Hill-Sachs lesion: from 'engaging/non-engaging' to 'on-track/off-track'."
  * Arthroscopy. 2014;30(1):90-98.
  */
-
-import type { ClinicalInput } from "./types";
 
 export interface TrackResult {
   glenoidTrack: number;
@@ -17,8 +19,15 @@ export interface TrackResult {
   marginMm: number;
 }
 
+interface TrackInput {
+  glenoidWidth: number;
+  defectWidth: number;
+  hillSachsWidth: number;
+  hslToRotatorCuffOffset: number;
+}
+
 /**
- * Compute glenoid track status.
+ * Compute glenoid track status from mm measurements.
  *
  * Glenoid Track (GT) = 0.83 × glenoidWidth − boneLossWidth
  * Hill-Sachs Track (HST) = hillSachsWidth + hslToRotatorCuffOffset
@@ -28,7 +37,7 @@ export interface TrackResult {
  *
  * All measurements in mm.
  */
-export function computeTrackStatus(input: ClinicalInput): TrackResult {
+export function computeTrackStatus(input: TrackInput): TrackResult {
   const boneLossWidth = input.defectWidth;
   const glenoidTrack =
     0.83 * input.glenoidWidth - boneLossWidth;

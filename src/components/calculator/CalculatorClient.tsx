@@ -1,51 +1,45 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   computeISISScore,
-  computeBoneLossPercent,
-  computeTrackStatus,
+  computeRiskCategory,
   getIsisRecommendation,
 } from "@/lib/clinical";
 import type { ClinicalInput } from "@/lib/clinical/types";
 import { RiskForm } from "./RiskForm";
 import { ScoreDisplay } from "./ScoreDisplay";
 
-const INITIAL: ClinicalInput = {
+const BASE_INITIAL: ClinicalInput = {
   ageAtFirstDislocation: 0,
   competitiveSport: false,
   contactOrOverheadSport: false,
   anteriorHyperlaxity: false,
-  hillSachsOnApXray: false,
-  glenoidBoneLossOnApXray: false,
-  glenoidWidth: 0,
-  defectWidth: 0,
-  hillSachsWidth: 0,
-  hslToRotatorCuffOffset: 0,
+  boneLossPercent: 0,
+  hillSachsTrackStatus: "on-track",
   priorDislocationCount: 1,
   sex: "male",
 };
 
-export function CalculatorClient() {
-  const [form, setForm] = useState<ClinicalInput>(INITIAL);
+function CalculatorClientInner() {
+  const searchParams = useSearchParams();
+  const initialBoneLoss = searchParams.get("boneLoss");
+  const parsedBoneLoss = initialBoneLoss ? parseFloat(initialBoneLoss) : 0;
+
+  const [form, setForm] = useState<ClinicalInput>(() => ({
+    ...BASE_INITIAL,
+    boneLossPercent: isNaN(parsedBoneLoss) ? 0 : parsedBoneLoss,
+  }));
 
   // All computations are pure and cheap — recompute live on every change.
   const derived = useMemo(() => {
     const isis = computeISISScore(form);
-    const recommendation = getIsisRecommendation(isis.total);
-    const boneLossPercent = computeBoneLossPercent(form);
-    const track = computeTrackStatus(form);
+    const riskCategory = computeRiskCategory(isis.total, form.boneLossPercent, form.hillSachsTrackStatus);
+    const isOverride = form.boneLossPercent > 20 && form.hillSachsTrackStatus === "off-track";
+    const recommendation = getIsisRecommendation(riskCategory, isOverride);
 
-    // Only surface bone loss / track once the relevant inputs are provided,
-    // so we never show meaningless "0mm / on-track" defaults.
-    const hasBoneLoss = form.glenoidWidth > 0 && form.defectWidth > 0;
-    const hasTrack =
-      form.glenoidWidth > 0 &&
-      form.defectWidth > 0 &&
-      form.hillSachsWidth > 0 &&
-      form.hslToRotatorCuffOffset > 0;
-
-    return { isis, recommendation, boneLossPercent, track, hasBoneLoss, hasTrack };
+    return { isis, riskCategory, isOverride, recommendation };
   }, [form]);
 
   return (
@@ -71,7 +65,7 @@ export function CalculatorClient() {
         <RiskForm
           value={form}
           onChange={setForm}
-          onReset={() => setForm(INITIAL)}
+          onReset={() => setForm(BASE_INITIAL)}
         />
 
         <div className="lg:sticky lg:top-24">
@@ -79,13 +73,19 @@ export function CalculatorClient() {
             input={form}
             isis={derived.isis}
             recommendation={derived.recommendation}
-            boneLossPercent={derived.boneLossPercent}
-            hasBoneLoss={derived.hasBoneLoss}
-            track={derived.track}
-            hasTrack={derived.hasTrack}
+            riskCategory={derived.riskCategory}
+            isOverride={derived.isOverride}
           />
         </div>
       </div>
     </div>
+  );
+}
+
+export function CalculatorClient() {
+  return (
+    <Suspense fallback={<div className="p-8 font-mono text-sm text-[#64748b]">Loading calculator...</div>}>
+      <CalculatorClientInner />
+    </Suspense>
   );
 }
