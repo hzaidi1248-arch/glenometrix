@@ -19,16 +19,31 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
         <GlenometrixLogo markSize={48} className="mb-8" />
 
         <nav className="flex flex-col gap-0.5 flex-1" aria-label="Mobile navigation">
-          {siteConfig.nav.links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={onClose}
-              className="font-sans text-[#0a0e1a] text-base font-medium py-3 px-2 hover:text-[#1a5fae] transition-colors border-b border-[#f0f0ee] last:border-b-0"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {siteConfig.nav.links.map((link) => {
+            const isExternal = link.href.startsWith("http");
+            const cls = "font-sans text-[#0a0e1a] text-base font-medium py-3 px-2 hover:text-[#1a5fae] transition-colors border-b border-[#f0f0ee] last:border-b-0";
+            return isExternal ? (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onClose}
+                className={cls}
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={onClose}
+                className={cls}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <Link

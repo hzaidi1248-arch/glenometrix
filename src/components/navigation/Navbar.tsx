@@ -41,15 +41,29 @@ export function Navbar() {
             className="hidden md:flex items-center gap-6"
             aria-label="Main navigation"
           >
-            {siteConfig.nav.links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="font-sans text-sm font-medium text-[#64748b] hover:text-[#0a0e1a] transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {siteConfig.nav.links.map((link) => {
+              const isExternal = link.href.startsWith("http");
+              const cls = "font-sans text-sm font-medium text-[#64748b] hover:text-[#0a0e1a] transition-colors";
+              return isExternal ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cls}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cls}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Desktop CTA */}

@@ -185,17 +185,25 @@ export function HeroSection() {
               className="flex flex-wrap gap-3 pt-1"
               {...fadeUp(0.75)}
             >
-              <Link
+              <a
                 href={hero.cta.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-[#0a0e1a] hover:bg-[#1a5fae] text-white font-sans font-medium px-6 py-3 rounded transition-colors inline-flex items-center gap-2 w-full sm:w-auto justify-center text-[0.9375rem]"
               >
                 {hero.cta.label}
-              </Link>
+              </a>
               <Link
                 href={hero.ctaSecondary.href}
                 className="font-sans text-[#0a0e1a] border border-[#e5e5e3] hover:border-[#0a0e1a] px-6 py-3 rounded transition-colors inline-flex items-center w-full sm:w-auto justify-center text-[0.9375rem]"
               >
                 {hero.ctaSecondary.label}
+              </Link>
+              <Link
+                href={hero.ctaTertiary.href}
+                className="font-sans text-[#64748b] hover:text-[#0a0e1a] px-6 py-3 rounded transition-colors inline-flex items-center w-full sm:w-auto justify-center text-[0.9375rem]"
+              >
+                {hero.ctaTertiary.label}
               </Link>
             </motion.div>
 

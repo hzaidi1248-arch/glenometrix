@@ -19,7 +19,8 @@ export const siteConfig = {
     links: [
       { label: "How It Works", href: "/#how" },
       { label: "The Science", href: "/#science" },
-      { label: "Use The Tool", href: "/dashboard/assessment" },
+      { label: "Use The Tool", href: "https://app.glenometrix.com" },
+      { label: "Demo The Tool", href: "/dashboard/assessment" },
     ],
     cta: { label: "Join Mailing List", href: "/#access" },
   },
@@ -40,8 +41,9 @@ export const siteConfig = {
     headlineAccent: "Estimate.",
     subhead:
       "Glenometrix measures glenoid bone loss from 3D CT scans with ICC 0.87 agreement against expert clinicians. The objective measurement every shoulder instability case requires.",
-    cta: { label: "Use The Tool", href: "/dashboard/assessment" },
-    ctaSecondary: { label: "Join Mailing List", href: "#access" },
+    cta: { label: "Use The Tool", href: "https://app.glenometrix.com" },
+    ctaSecondary: { label: "Demo The Tool", href: "/dashboard/assessment" },
+    ctaTertiary: { label: "Join Mailing List", href: "#access" },
   },
 
   problem: {
