@@ -118,7 +118,7 @@ export const siteConfig = {
       },
       {
         icon: "ScanLine",
-        title: "AI Segmentation",
+        title: "Automated Segmentation",
         body: "A research algorithm segments the glenoid, identifies anterior and posterior margins, and applies a best-fit circle algorithm to calculate percentage bone loss.",
       },
       {
