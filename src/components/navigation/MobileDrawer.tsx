@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { GlenometrixLogo } from "@/components/shared/GlenometrixLogo";
 import { siteConfig } from "@/config/site";
@@ -19,40 +20,37 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
         <GlenometrixLogo markSize={48} className="mb-8" />
 
         <nav className="flex flex-col gap-0.5 flex-1" aria-label="Mobile navigation">
-          {siteConfig.nav.links.map((link) => {
-            const isExternal = link.href.startsWith("http");
-            const cls = "font-sans text-[#0a0e1a] text-base font-medium py-3 px-2 hover:text-[#1a5fae] transition-colors border-b border-[#f0f0ee] last:border-b-0";
-            return isExternal ? (
-              <a
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={onClose}
-                className={cls}
-              >
-                {link.label}
-              </a>
-            ) : (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={onClose}
-                className={cls}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+          {siteConfig.nav.links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={onClose}
+              className="font-sans text-[#0a0e1a] text-base font-medium py-3 px-2 hover:text-[#1a5fae] transition-colors border-b border-[#f0f0ee] last:border-b-0"
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
-        <Link
-          href={siteConfig.nav.cta.href}
-          onClick={onClose}
-          className="mt-6 w-full bg-[#0a0e1a] hover:bg-[#1a5fae] text-white font-sans text-sm font-medium px-4 py-3 rounded text-center transition-colors inline-block"
-        >
-          {siteConfig.nav.cta.label}
-        </Link>
+        <div className="flex flex-col gap-3 mt-6">
+          <a
+            href={siteConfig.nav.toolCta.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+            className="w-full bg-[#1a5fae] hover:bg-[#1550a0] text-white font-sans text-sm font-semibold px-4 py-3 rounded-md text-center transition-colors inline-flex items-center justify-center gap-2 shadow-md shadow-[#1a5fae]/25"
+          >
+            {siteConfig.nav.toolCta.label}
+            <ExternalLink size={14} />
+          </a>
+          <Link
+            href={siteConfig.nav.cta.href}
+            onClick={onClose}
+            className="w-full bg-[#0a0e1a] hover:bg-[#1a5fae] text-white font-sans text-sm font-medium px-4 py-3 rounded text-center transition-colors inline-block"
+          >
+            {siteConfig.nav.cta.label}
+          </Link>
+        </div>
       </SheetContent>
     </Sheet>
   );

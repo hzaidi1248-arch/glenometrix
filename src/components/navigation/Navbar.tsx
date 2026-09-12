@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { Menu, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { GlenometrixLogo } from "@/components/shared/GlenometrixLogo";
 import { MobileDrawer } from "./MobileDrawer";
@@ -32,48 +32,43 @@ export function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" aria-label="Glenometrix home">
+          <Link href="/" aria-label="Glenometrix home" className="flex-shrink-0">
             <GlenometrixLogo markSize={48} />
           </Link>
 
-          {/* Desktop nav */}
+          {/* Desktop nav — centered links */}
           <nav
-            className="hidden md:flex items-center gap-6"
+            className="hidden md:flex items-center gap-7 ml-10"
             aria-label="Main navigation"
           >
-            {siteConfig.nav.links.map((link) => {
-              const isExternal = link.href.startsWith("http");
-              const cls = "font-sans text-sm font-medium text-[#64748b] hover:text-[#0a0e1a] transition-colors";
-              return isExternal ? (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cls}
-                >
-                  {link.label}
-                </a>
-              ) : (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cls}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
+            {siteConfig.nav.links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="font-sans text-sm font-medium text-[#64748b] hover:text-[#0a0e1a] transition-colors whitespace-nowrap"
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:block">
+          {/* Desktop right-side CTAs */}
+          <div className="hidden md:flex items-center gap-3 ml-auto pl-6">
             <Link
               href={siteConfig.nav.cta.href}
-              className="bg-[#0a0e1a] hover:bg-[#1a5fae] text-white font-sans text-sm font-medium px-4 py-2 rounded transition-colors inline-block"
+              className="font-sans text-sm font-medium text-[#64748b] hover:text-[#0a0e1a] transition-colors whitespace-nowrap"
             >
               {siteConfig.nav.cta.label}
             </Link>
+            <a
+              href={siteConfig.nav.toolCta.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#1a5fae] hover:bg-[#1550a0] text-white font-sans text-sm font-semibold px-5 py-2.5 rounded-md transition-all shadow-md shadow-[#1a5fae]/25 hover:shadow-lg hover:shadow-[#1a5fae]/30 inline-flex items-center gap-2 whitespace-nowrap"
+            >
+              {siteConfig.nav.toolCta.label}
+              <ExternalLink size={14} />
+            </a>
           </div>
 
           {/* Mobile hamburger */}
