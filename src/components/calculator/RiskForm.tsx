@@ -46,7 +46,7 @@ export function RiskForm({ value, onChange, onReset }: RiskFormProps) {
     <div className="flex flex-col gap-6">
       <p className="font-sans text-[#64748b] text-sm leading-relaxed">
         Results update live as you enter each factor.{" "}
-        <span className="font-medium text-[#0a0e1a]">Research use only.</span>
+        <span className="font-medium text-[#0a0e1a]">Research use only. Not for clinical use.</span>
       </p>
 
       {/* ── ISIS Score Factors ─────────────────────────────────────────── */}

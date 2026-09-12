@@ -131,7 +131,7 @@ export const siteConfig = {
 
   upload: {
     headline: "Upload Imaging. Receive Your Score.",
-    body: "Research use only. Upload de-identified CT imaging to generate a Glenometrix score. Do not include any patient-identifying information.",
+    body: "Research use only. Not for clinical use. Upload de-identified CT imaging to generate a Glenometrix score. Do not include any patient-identifying information.",
     phase0Notice:
       "CT scan processing is not active in this phase. Upload interactions are simulated for demonstration purposes.",
     phiWarning:
@@ -171,9 +171,9 @@ export const siteConfig = {
 
   ruo: {
     banner:
-      "Research Use Only. Not for Clinical Diagnostic Use.",
+      "RESEARCH USE ONLY. NOT FOR CLINICAL USE.",
     modal: {
-      title: "PHI Warning: Research Use Only",
+      title: "PHI Warning: Research Use Only. Not For Clinical Use.",
       body: "Do not upload images containing patient-identifiable information. This tool is for research purposes only and is not cleared or approved for clinical diagnostic use. All results are for research only.",
       confirm: "I understand. Proceed with de-identified imaging only.",
     },

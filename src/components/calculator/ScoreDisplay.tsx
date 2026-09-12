@@ -67,7 +67,7 @@ export function ScoreDisplay({
           </span>
         </div>
         <span className="font-mono text-[9px] text-[#c4c4c2] uppercase tracking-[0.22em]">
-          Research Use Only
+          Research Use Only. Not For Clinical Use.
         </span>
       </div>
 
