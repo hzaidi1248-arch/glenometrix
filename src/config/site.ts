@@ -101,7 +101,7 @@ export const siteConfig = {
       },
     ],
     method:
-      "A U-Net convolutional neural network segments the glenoid and applies a best-fit circle to the affected side alone. No contralateral scan required.",
+      "A research algorithm segments the glenoid and applies a best-fit circle to the affected side alone. No contralateral scan required.",
     citation:
       'Khan et al. "GlenometriX: A Reliable Tool for Quantifying Glenoid Bone Loss." McMaster University, 2026. Manuscript in submission.',
   },
@@ -109,7 +109,7 @@ export const siteConfig = {
   metric: {
     headline: "The Glenometrix Score:",
     headlineAccent: "Objective. Reproducible. Instant.",
-    body: "Upload a de-identified 3D CT scan. GlenometriX uses a U-Net convolutional neural network to automatically segment the glenoid from the affected side alone. No contralateral imaging required. It then applies a best-fit circle algorithm, and delivers a structured clinical output including ISIS scoring, on/off-track assessment, and a decision pathway.",
+    body: "Upload a de-identified 3D CT scan. GlenometriX uses a research algorithm to automatically segment the glenoid from the affected side alone. No contralateral imaging required. It then applies a best-fit circle algorithm, and delivers a structured clinical output including ISIS scoring, on/off-track assessment, and a decision pathway.",
     steps: [
       {
         icon: "UploadCloud",
@@ -119,7 +119,7 @@ export const siteConfig = {
       {
         icon: "ScanLine",
         title: "AI Segmentation",
-        body: "U-Net CNN segments the glenoid, identifies anterior and posterior margins, and applies a best-fit circle algorithm to calculate percentage bone loss.",
+        body: "A research algorithm segments the glenoid, identifies anterior and posterior margins, and applies a best-fit circle algorithm to calculate percentage bone loss.",
       },
       {
         icon: "BarChart3",
