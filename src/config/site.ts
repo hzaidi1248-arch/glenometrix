@@ -19,7 +19,7 @@ export const siteConfig = {
     links: [
       { label: "How It Works", href: "/#how" },
       { label: "The Science", href: "/#science" },
-      { label: "Demo The Tool", href: "/dashboard/assessment" },
+      // { label: "Demo The Tool", href: "/dashboard/assessment" },
     ],
     cta: { label: "Join Mailing List", href: "/#access" },
     toolCta: { label: "Use The Tool", href: "https://app.glenometrix.com" },

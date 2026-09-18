@@ -193,12 +193,12 @@ export function HeroSection() {
               >
                 {hero.cta.label}
               </a>
-              <Link
+              {/* <Link
                 href={hero.ctaSecondary.href}
                 className="font-sans text-[#0a0e1a] border border-[#e5e5e3] hover:border-[#0a0e1a] px-6 py-3 rounded transition-colors inline-flex items-center w-full sm:w-auto justify-center text-[0.9375rem]"
               >
                 {hero.ctaSecondary.label}
-              </Link>
+              </Link> */}
               <Link
                 href={hero.ctaTertiary.href}
                 className="font-sans text-[#64748b] hover:text-[#0a0e1a] px-6 py-3 rounded transition-colors inline-flex items-center w-full sm:w-auto justify-center text-[0.9375rem]"
