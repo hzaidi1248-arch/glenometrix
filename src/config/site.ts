@@ -19,6 +19,7 @@ export const siteConfig = {
     links: [
       { label: "How It Works", href: "/#how" },
       { label: "The Science", href: "/#science" },
+      { label: "Calculator", href: "/dashboard/calculator" },
       // { label: "Demo The Tool", href: "/dashboard/assessment" },
     ],
     cta: { label: "Join Mailing List", href: "/#access" },
